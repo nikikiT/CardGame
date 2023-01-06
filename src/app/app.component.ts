@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from "./api.service";
+import {ApiService} from "../services/api.service";
 
 @Component({
   selector: 'app-root',
@@ -8,11 +8,13 @@ import {ApiService} from "./api.service";
 })
 export class AppComponent implements OnInit{
   title = 'CardGame';
+
+
   constructor(private api: ApiService) {
   }
 
   ngOnInit() {
-    this.api.updateInfo()
+    this.api.signIn('nikitoxic','123456')
       .subscribe(v=> {
 
       },error => {
