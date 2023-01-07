@@ -15,22 +15,22 @@ export class ApiService {
     fd.append('pname','reg_new_user');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('lg',login);
-    fd.append('pw',password);
+    fd.append('p1',login);
+    fd.append('p2',password);
 
     return  this.http.post(this.URL,fd)
   }
 
-  signIn(login: string, password: string) :Observable<any>{
+  signIn(capsuleForLogin: any): Observable<any>{
 
     let fd = new FormData();
     fd.append('pname','sign_in');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('lg',login);
-    fd.append('pw',password);
+    fd.append('p1',capsuleForLogin.login);
+    fd.append('p2',capsuleForLogin.password);
 
-    return  this.http.post(this.URL,fd)
+    return this.http.post(this.URL,fd)
   }
 
   updateInfo(token: string): Observable<any>{
@@ -39,7 +39,7 @@ export class ApiService {
     fd.append('pname','update_info');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
+    fd.append('p1',token);
 
     return  this.http.post(this.URL,fd)
   }
@@ -50,9 +50,9 @@ export class ApiService {
     fd.append('pname','new_room');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rd',roundDuration);
-    fd.append('pw',password);
+    fd.append('p1',token);
+    fd.append('p2',roundDuration);
+    fd.append('p3',password);
 
     return  this.http.post(this.URL,fd)
   }
@@ -62,9 +62,9 @@ export class ApiService {
     fd.append('pname','join_room');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rn',roomNumber);
-    fd.append('pw',password);
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
+    fd.append('p3',password);
 
     return  this.http.post(this.URL,fd)
   }
@@ -74,8 +74,8 @@ export class ApiService {
     fd.append('pname','start_game');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rn',roomNumber);
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
 
     return  this.http.post(this.URL,fd)
   }
@@ -85,8 +85,8 @@ export class ApiService {
     fd.append('pname','update_game');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('room_numb',roomNumber);
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
 
     return  this.http.post(this.URL,fd);
   }
@@ -96,9 +96,9 @@ export class ApiService {
     fd.append('pname','change_cards');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rc',card);
-    fd.append('card',roomNumber);
+    fd.append('p1',token);
+    fd.append('p2',card);
+    fd.append('p3',roomNumber);
 
     return  this.http.post(this.URL,fd);
   }
@@ -108,11 +108,11 @@ export class ApiService {
     fd.append('pname','play_card');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rc',roomNumber);
-    fd.append('id_c',idCard);
-    fd.append('target',targetLogin);
-    fd.append('id_c_additional',idCardAdditional); //Null в большинстве случаев кроме одной специальной карты (Соблазн)
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
+    fd.append('p3',idCard);
+    fd.append('p4',targetLogin);
+    fd.append('p5',idCardAdditional); //Null в большинстве случаев кроме одной специальной карты (Соблазн)
 
     return  this.http.post(this.URL,fd);
   }
@@ -122,9 +122,9 @@ export class ApiService {
     fd.append('pname','drop_card');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rc',roomNumber);
-    fd.append('id_c',idCard);
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
+    fd.append('p3',idCard);
 
 
     return  this.http.post(this.URL,fd);
@@ -135,9 +135,9 @@ export class ApiService {
     fd.append('pname','defend');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rc',roomNumber);
-    fd.append('id_c_def',idCard);
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
+    fd.append('p3',idCard);
 
 
     return  this.http.post(this.URL,fd);
@@ -148,15 +148,13 @@ export class ApiService {
     fd.append('pname','pass_e');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rc',roomNumber);
-    fd.append('change_from_passed',idCard); //Null в большинстве случаев кроме одной специальной карты (Соблазн)
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
+    fd.append('p3',idCard); //Null в большинстве случаев кроме одной специальной карты (Соблазн)
 
 
     return  this.http.post(this.URL,fd);
   }
-
-
 
   //Не обязательна
   leaveRoom(token: string, roomNumber: string, password: string){
@@ -164,9 +162,9 @@ export class ApiService {
     fd.append('pname','leave_room');
     fd.append('db','298479');
     fd.append('format','columns_compact');
-    fd.append('tk',token);
-    fd.append('rn',roomNumber);
-    fd.append('pw',password);
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
+    fd.append('p3',password);
 
     return  this.http.post(this.URL,fd);
   }

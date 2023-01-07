@@ -1,0 +1,30 @@
+<div class="entry-point">
+  <h1>Регистрация</h1>
+
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Логин</mat-label>
+      <input [formControl]="login" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Пароль</mat-label>
+      <input id="passwordInput" placeholder="" value="" [formControl]="password" matInput>
+    </mat-form-field>
+  </form>
+
+  <section>
+    <div class="example-button-row">
+      <button ngMode mat-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonSignIn" color="primary">Зарегистрироваться</button> или
+      <button ngMode mat-button (click)="onSubmitSignIn()" id="routToRegister" color="primary">Перейти ко входу</button>
+    </div>
+  </section>
+
+  <!--Желтенькое - навести и посикать предложения к исправлени (что импортировать). Желтенькое значит не скачено.-->
+  <!--Форм контролы можно объединять в форм группы и проверять валидность сразу набора форм контролов. -->
+  <!--  В конструкторы компонентов можно инджектить другие компоненты.-->
+  <!--  В эпп модуль файле дескриптор модуля. Там можем прописывать список соответствия урлу - компонента. -->
+
+  <!--  Почитать инпут и аутпут элементы и двусторонее связывание!-->
+
+</div>
