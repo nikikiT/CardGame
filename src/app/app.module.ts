@@ -13,6 +13,8 @@ import { RegisterComponent } from './register/register.component';
 import { RoomsInfoComponent } from './rooms-info/rooms-info.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from "@angular/material/table";
+import { GameComponent } from './game/game/game.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 const appRoutes: Routes = [
@@ -29,10 +31,14 @@ const appRoutes: Routes = [
   },
 
   {
-    path: 'home',
+    path: 'gamesHub',
     component: RoomsInfoComponent,
   },
 
+  {
+    path: 'gameTable',
+    component: GameComponent,
+  }
 ];
 
 @NgModule({
@@ -40,21 +46,23 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    RoomsInfoComponent
+    RoomsInfoComponent,
+    GameComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatInputModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    RouterModule.forRoot(
-      appRoutes,
-    ),
-    MatButtonModule,
-    MatTableModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        RouterModule.forRoot(
+            appRoutes,
+        ),
+        MatButtonModule,
+        MatTableModule,
+        MatCardModule
+    ],
   providers: [HttpClient, LoginComponent],
   bootstrap: [AppComponent]
 })

@@ -11,14 +11,16 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit{
 
   constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
-
   }
 
   login = new FormControl('',[Validators.required]);
   password = new FormControl('',[Validators.required]);
   //response = new
-  token: any;
+  userToken: any;
+
   messOfInfoResponse: any;
+
+  playersOnlineResponse: any;
 
   fg = new FormGroup({
       login: this.login,
@@ -44,11 +46,12 @@ export class LoginComponent implements OnInit{
       this.api.signIn(capsuleForLogin)
         .subscribe(v=> {
           //v.RESULTS - это массив из 4 объектов из которых 0-й - содержит токен.
-
+          console.log(this.userToken);
+          localStorage.setItem('userToken',JSON.stringify(v.RESULTS[0]['Ваш_токен'][0]));
           this.messOfInfoResponse=v.RESULTS;
           localStorage.setItem('messOfInfoResponse',JSON.stringify(v.RESULTS));
-          this.token=v.RESULTS[0]['Ваш_токен'][0];
-          this.router.navigate(['home'])
+          this.userToken=v.RESULTS[0]['Ваш_токен'][0];
+          this.router.navigate(['gamesHub']);
         },error => {
           alert('Упс! Простите, что-то пошло не так')
         })

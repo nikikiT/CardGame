@@ -80,7 +80,7 @@ export class ApiService {
     return  this.http.post(this.URL,fd)
   }
 
-  updateGame(token: string, roomNumber: string){
+  updateGame(token: string, roomNumber: string): Observable<any>{
     let fd = new FormData();
     fd.append('pname','update_game');
     fd.append('db','298479');
