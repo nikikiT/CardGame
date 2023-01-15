@@ -12,3 +12,8 @@ mat-form-field{
   margin: 20px;
   font-family: Laksaman;
 }
+
+.button-section{
+  display: inline-block;
+  margin: 20px;
+}

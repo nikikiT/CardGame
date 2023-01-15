@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {Router} from "@angular/router";
 import {LoginComponent} from "../login/login.component";
-import {JoinDialogueComponent} from "./join-room-dialog/join-dialogue/join-dialogue.component";
+import {JoinGameComponent} from "./dialogs/join-game/join-game.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -17,12 +17,12 @@ export class RoomsInfoComponent implements OnInit{
   userToken: any;
   temporaryForMessInfo: any;
 
-  userTokenFc = new FormControl('',[Validators.required]);
-  roomCodeFc = new FormControl('',[Validators.required]);
+  roomToEnterFC = new FormControl('',[Validators.required]);
+  roomToEnterPassFc = new FormControl('',[Validators.required]);
 
   fg = new FormGroup({
-    login: this.userTokenFc,
-    password: this.roomCodeFc
+    login: this.roomToEnterFC,
+    password: this.roomToEnterPassFc
   });
 
   dataSource: any[] = [];
@@ -32,6 +32,7 @@ export class RoomsInfoComponent implements OnInit{
     'passwordFromRoom',
     'playersInRoom',
     'buttonToJoin',
+    'buttonsToGetInRoom'
   ];
 
   temporaryPlayersOnline: any;
@@ -55,11 +56,14 @@ export class RoomsInfoComponent implements OnInit{
   }
 
   onSubmit(roomNumber: any, passwordForRoom: any){ //Есди пароль не введен то заполнить автоматически
+    if (passwordForRoom=="Без пароля"){
+      passwordForRoom='NULL';
+    }
     let data = {
       roomNumber: roomNumber,
       password: passwordForRoom
     }
-    const dialogRef = this.dialog.open(JoinDialogueComponent, {data:data});
+    const dialogRef = this.dialog.open(JoinGameComponent, {data:data});
     dialogRef.afterClosed().subscribe(data=>{
 
     })
@@ -69,6 +73,17 @@ export class RoomsInfoComponent implements OnInit{
 
     //this.api.joinRoom(this.userToken,roomCode,'NULL');
     //this.router.navigate(['gameTable']);
+  }
+
+  joinRoom(roomNumber: any, passwordForRoom: any){
+    if (passwordForRoom=="Без пароля")
+      passwordForRoom='NULL';
+    let data = {
+      roomNumber: roomNumber,
+      password: passwordForRoom
+    }
+    const dialogRef = this.dialog.open(JoinGameComponent, {data:data});
+
   }
 
   ngOnInit() {

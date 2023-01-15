@@ -1,11 +1,9 @@
-<h1 mat-dialog-title>Присоединиться к комнате</h1>
+<h1 mat-dialog-title>Войти в игру</h1>
 <div mat-dialog-content>
-  <p>Заполните поля</p>
-
   <mat-form-field>
     <mat-label>Номер комнаты</mat-label>
     <input [formControl]="roomNumberFC" matInput>
-    <mat-error *ngIf="roomNumberFC.hasError('required')">Вы должны ввести имя</mat-error>
+    <mat-error *ngIf="roomNumberFC.hasError('required')">Обязательное поле</mat-error>
     <mat-error *ngIf="roomNumberFC.hasError('blank')">Вы не выбрали комнату для вступления</mat-error>
   </mat-form-field>
 
@@ -15,7 +13,7 @@
   </mat-form-field>
 
   <div>
-<!--      <button mat-button (click)="onSubmit()" [disabled]="roomNumberFC.invalid" id="buttonSignIn" color="primary">Присоединиться</button>&ndash;&gt;-->
+      <button mat-button (click)="onSubmit()" [disabled]="roomNumberFC.invalid" id="buttonSignIn" color="primary">Перейти за стол</button>
   </div>
 
 </div>

@@ -15,8 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from "@angular/material/table";
 import { GameComponent } from './game/game/game.component';
 import {MatCardModule} from "@angular/material/card";
-import { JoinDialogueComponent } from './rooms-info/join-room-dialog/join-dialogue/join-dialogue.component';
+import { JoinGameComponent } from './rooms-info/dialogs/join-game/join-game.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { JoinRoomComponent } from './rooms-info/dialogs/join-room/join-room/join-room.component';
 
 
 const appRoutes: Routes = [
@@ -50,7 +51,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     RoomsInfoComponent,
     GameComponent,
-    JoinDialogueComponent
+    JoinGameComponent,
+    JoinRoomComponent
   ],
     imports: [
         BrowserModule,
