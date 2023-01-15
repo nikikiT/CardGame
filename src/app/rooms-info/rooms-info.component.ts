@@ -36,6 +36,8 @@ export class RoomsInfoComponent implements OnInit{
     'buttonsToGetInRoom'
   ];
 
+  rout:any;
+
   temporaryPlayersOnline: any;
 
   roomNumberChosen: any;
@@ -54,6 +56,8 @@ export class RoomsInfoComponent implements OnInit{
   playerRoomsDataSource: any[] = [];
 
   constructor(private api:ApiService, private router: Router, public dialog: MatDialog) {
+    this.rout='gamesHub';
+    localStorage.setItem('rout',this.rout);
   }
 
   joinGame(roomNumber: any, passwordForRoom: any) {
@@ -68,7 +72,6 @@ export class RoomsInfoComponent implements OnInit{
     dialogRef.afterClosed().subscribe(data => {
 
     })
-    console.log("Ввели пароль:" + passwordForRoom);
     this.userToken = JSON.parse(localStorage.getItem('userToken') || '');
     localStorage.setItem('roomNumberChosen', roomNumber);
 
@@ -84,7 +87,12 @@ export class RoomsInfoComponent implements OnInit{
       password: passwordForRoom
     }
     const dialogRef = this.dialog.open(JoinRoomComponent, {data:data});
+    dialogRef.afterClosed().subscribe(v=>{
+      if (v){
+        //обновление таблицы
+      }
 
+    })
   }
 
   ngOnInit() {

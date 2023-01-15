@@ -16,6 +16,6 @@ export class AppComponent implements OnInit{
 
 
   ngOnInit() {
-    this.router.navigate(['login']);
+    this.router.navigate([localStorage.getItem('rout')]);
   }
 }

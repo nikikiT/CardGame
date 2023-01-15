@@ -9,19 +9,21 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
-  constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
-
-  }
-
   login = new FormControl('',[Validators.required]);
   password = new FormControl('',[Validators.required]);
+  rout: any;
   fg = new FormGroup(
     {
       login: this.login,
       password: this.password
     }
   )
+  constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
+    this.rout='register';
+    localStorage.setItem('rout',this.rout);
+  }
+
+
 
 
   onSubmitSignIn(){

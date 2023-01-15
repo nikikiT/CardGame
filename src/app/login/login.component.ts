@@ -9,23 +9,23 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
-
-  constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
-  }
-
   login = new FormControl('',[Validators.required]);
   password = new FormControl('',[Validators.required]);
   //response = new
   userToken: any;
-
+  errorMsg = null
+  rout: any;
   messOfInfoResponse: any;
-
   playersOnlineResponse: any;
 
   fg = new FormGroup({
-      login: this.login,
-      password: this.password
+    login: this.login,
+    password: this.password
   });
+  constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
+    this.rout='login';
+    localStorage.setItem('rout',this.rout);
+  }
 
 
 
@@ -46,7 +46,13 @@ export class LoginComponent implements OnInit{
       this.api.signIn(capsuleForLogin)
         .subscribe(v=> {
           //v.RESULTS - это массив из 4 объектов из которых 0-й - содержит токен.
-          console.log(this.userToken);
+          if (v.RESULTS[0].rus_error) {
+            this.errorMsg = v.RESULTS[0].rus_error[0]
+            alert(this.errorMsg)
+            return;
+          }
+          this.errorMsg = null;
+          console.log('User token '+this.userToken);
           localStorage.setItem('userToken',JSON.stringify(v.RESULTS[0]['Ваш_токен'][0]));
           this.messOfInfoResponse=v.RESULTS;
           localStorage.setItem('messOfInfoResponse',JSON.stringify(v.RESULTS));

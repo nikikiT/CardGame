@@ -41,6 +41,14 @@ const appRoutes: Routes = [
   {
     path: 'gameTable',
     component: GameComponent,
+  },
+  {
+    path: '',
+    component: LoginComponent,
+  },
+  {
+    path: '**',
+    component: LoginComponent,
   }
 ];
 

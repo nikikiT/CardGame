@@ -10,6 +10,7 @@
     <mat-form-field floatLabel="always" class="example-full-width">
       <mat-label>Пароль</mat-label>
       <input id="passwordInput" placeholder="" value="" [formControl]="password" matInput>
+      <mat-error *ngIf="password.hasError('required')">Вы не ввели пароль</mat-error>
     </mat-form-field>
   </form>
 

@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ApiService} from "../../../../services/api.service";
 import {Router} from "@angular/router";
 
@@ -16,7 +16,12 @@ export class JoinRoomComponent {
   roomNumberChosen: any;
   userToken: any;
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any, private api:ApiService, private router: Router) {
+  constructor( @Inject(MAT_DIALOG_DATA) public data: any,
+               private api:ApiService,
+               private router: Router,
+               public dialogRef: MatDialogRef<JoinRoomComponent>,
+
+  ) {
     this.roomNumberChosen=data.roomNumber;
     this.roomNumberFC.setValue(this.roomNumberChosen)
     this.userToken=localStorage.getItem('userToken');
@@ -27,13 +32,11 @@ export class JoinRoomComponent {
       let invokerData = {
         userToken: this.userToken || '',
         roomNumber: this.roomNumberFC.value || '',
-        // password: this.typedPasswordFC.value || '',
+        password: this.typedPasswordFC.value || '',
       }
-      console.log(invokerData.roomNumber);
-      console.log(invokerData.userToken);
-      this.api.updateGame(invokerData.userToken,invokerData.roomNumber)
+      this.api.joinRoom(invokerData.userToken,invokerData.roomNumber,invokerData.password)
         .subscribe(v=> {
-          this.router.navigate(['gameTable']);
+        this.dialogRef.close();
         },error => {
           alert('Упс! Простите, что-то пошло не так')
         })
