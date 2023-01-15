@@ -17,7 +17,7 @@ import { GameComponent } from './game/game/game.component';
 import {MatCardModule} from "@angular/material/card";
 import { JoinGameComponent } from './rooms-info/dialogs/join-game/join-game.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { JoinRoomComponent } from './rooms-info/dialogs/join-room/join-room/join-room.component';
+import { JoinRoomComponent } from './rooms-info/dialogs/join-room/join-room.component';
 
 
 const appRoutes: Routes = [

@@ -5,15 +5,14 @@ import {ApiService} from "../../../../services/api.service";
 import {Router} from "@angular/router";
 
 @Component({
-  // selector: 'child-component',
-  selector: 'app-join-game',
-  templateUrl: './join-game.component.html',
-  styleUrls: ['./join-game.component.css']
+  selector: 'app-join-room',
+  templateUrl: './join-room.component.html',
+  styleUrls: ['./join-room.component.css']
 })
-export class JoinGameComponent {
-
+export class JoinRoomComponent {
 
   roomNumberFC = new FormControl('',[Validators.required]);
+  typedPasswordFC = new FormControl('');
   roomNumberChosen: any;
   userToken: any;
 
@@ -28,7 +27,10 @@ export class JoinGameComponent {
       let invokerData = {
         userToken: this.userToken || '',
         roomNumber: this.roomNumberFC.value || '',
+        // password: this.typedPasswordFC.value || '',
       }
+      console.log(invokerData.roomNumber);
+      console.log(invokerData.userToken);
       this.api.updateGame(invokerData.userToken,invokerData.roomNumber)
         .subscribe(v=> {
           this.router.navigate(['gameTable']);

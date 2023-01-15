@@ -23,15 +23,15 @@
   </ng-container>
 
   <ng-container matColumnDef="buttonsToGetInRoom">
-    <th mat-header-cell *matHeaderCellDef>Присоединиться к игре</th>
+    <th mat-header-cell *matHeaderCellDef>Перейти к игре</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-button (click)="onSubmit(this.element.roomCode,this.element.passwordFromRoom)" color="primary">Присоединиться</button>
+      <button mat-button (click)="joinGame(this.element.roomCode,this.element.passwordFromRoom)" color="primary">Играть</button>
   </ng-container>
 
   <ng-container matColumnDef="buttonToJoin">
-    <th mat-header-cell *matHeaderCellDef>Перейти к игре</th>
+    <th mat-header-cell *matHeaderCellDef>Войти в комнату</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-button (click)="joinRoom(this.element.roomCode,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Играть</button>
+      <button mat-button (click)="joinRoom(this.element.roomCode,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Зайти</button>
     </td>
 
   </ng-container>

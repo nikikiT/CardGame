@@ -5,6 +5,7 @@ import {LoginComponent} from "../login/login.component";
 import {JoinGameComponent} from "./dialogs/join-game/join-game.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
+import {JoinRoomComponent} from "./dialogs/join-room/join-room.component";
 
 @Component({
   // selector: 'parent-component',
@@ -55,21 +56,21 @@ export class RoomsInfoComponent implements OnInit{
   constructor(private api:ApiService, private router: Router, public dialog: MatDialog) {
   }
 
-  onSubmit(roomNumber: any, passwordForRoom: any){ //Есди пароль не введен то заполнить автоматически
-    if (passwordForRoom=="Без пароля"){
-      passwordForRoom='NULL';
+  joinGame(roomNumber: any, passwordForRoom: any) {
+    if (passwordForRoom == "Без пароля") {
+      passwordForRoom = 'NULL';
     }
     let data = {
       roomNumber: roomNumber,
       password: passwordForRoom
     }
-    const dialogRef = this.dialog.open(JoinGameComponent, {data:data});
-    dialogRef.afterClosed().subscribe(data=>{
+    const dialogRef = this.dialog.open(JoinGameComponent, {data: data});
+    dialogRef.afterClosed().subscribe(data => {
 
     })
-    console.log("Ввели пароль:"+passwordForRoom);
-    this.userToken=JSON.parse(localStorage.getItem('userToken') || '');
-    localStorage.setItem('roomNumberChosen',roomNumber);
+    console.log("Ввели пароль:" + passwordForRoom);
+    this.userToken = JSON.parse(localStorage.getItem('userToken') || '');
+    localStorage.setItem('roomNumberChosen', roomNumber);
 
     //this.api.joinRoom(this.userToken,roomCode,'NULL');
     //this.router.navigate(['gameTable']);
@@ -82,7 +83,7 @@ export class RoomsInfoComponent implements OnInit{
       roomNumber: roomNumber,
       password: passwordForRoom
     }
-    const dialogRef = this.dialog.open(JoinGameComponent, {data:data});
+    const dialogRef = this.dialog.open(JoinRoomComponent, {data:data});
 
   }
 
