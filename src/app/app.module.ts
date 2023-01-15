@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {MatInputModule} from "@angular/material/input";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import { LoginComponent } from './login/login.component';
 import {RouterModule, Routes} from "@angular/router";
@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from "@angular/material/table";
 import { GameComponent } from './game/game/game.component';
 import {MatCardModule} from "@angular/material/card";
+import { JoinDialogueComponent } from './rooms-info/join-room-dialog/join-dialogue/join-dialogue.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 const appRoutes: Routes = [
@@ -47,7 +49,8 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     RoomsInfoComponent,
-    GameComponent
+    GameComponent,
+    JoinDialogueComponent
   ],
     imports: [
         BrowserModule,
@@ -61,7 +64,9 @@ const appRoutes: Routes = [
         ),
         MatButtonModule,
         MatTableModule,
-        MatCardModule
+        MatCardModule,
+        MatDialogModule,
+        FormsModule
     ],
   providers: [HttpClient, LoginComponent],
   bootstrap: [AppComponent]

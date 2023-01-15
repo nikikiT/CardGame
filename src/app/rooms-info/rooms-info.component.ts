@@ -2,9 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {Router} from "@angular/router";
 import {LoginComponent} from "../login/login.component";
+import {JoinDialogueComponent} from "./join-room-dialog/join-dialogue/join-dialogue.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
+  // selector: 'parent-component',
   selector: 'app-rooms-info',
   templateUrl: './rooms-info.component.html',
   styleUrls: ['./rooms-info.component.css']
@@ -33,6 +36,8 @@ export class RoomsInfoComponent implements OnInit{
 
   temporaryPlayersOnline: any;
 
+  roomNumberChosen: any;
+
   displayedColumnsPlayersOnline: string[] = [
     'playerLogin',
 
@@ -46,11 +51,22 @@ export class RoomsInfoComponent implements OnInit{
 
   playerRoomsDataSource: any[] = [];
 
-  constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
+  constructor(private api:ApiService, private router: Router, public dialog: MatDialog) {
   }
 
-  onSubmit(){
+  onSubmit(roomNumber: any, passwordForRoom: any){ //Есди пароль не введен то заполнить автоматически
+    let data = {
+      roomNumber: roomNumber,
+      password: passwordForRoom
+    }
+    const dialogRef = this.dialog.open(JoinDialogueComponent, {data:data});
+    dialogRef.afterClosed().subscribe(data=>{
+
+    })
+    console.log("Ввели пароль:"+passwordForRoom);
     this.userToken=JSON.parse(localStorage.getItem('userToken') || '');
+    localStorage.setItem('roomNumberChosen',roomNumber);
+
     //this.api.joinRoom(this.userToken,roomCode,'NULL');
     //this.router.navigate(['gameTable']);
   }

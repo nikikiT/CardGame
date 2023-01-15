@@ -25,13 +25,13 @@
   <ng-container matColumnDef="buttonToJoin">
     <th mat-header-cell *matHeaderCellDef>Войти в комнату</th>
     <td mat-cell *matCellDef="let element">
-      <button *ngIf="element.passwordFromRoom=='Без пароля'" mat-button (click)="onSubmit()" id="joinRoomButton" color="primary">Подключиться</button>
+      <button *ngIf="element.passwordFromRoom=='Без пароля'" mat-button (click)="onSubmit(this.element.roomCode,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Подключиться</button>
     </td>
 
   </ng-container>
 </table>
 
-<table label="Комнаты в которых вы состоите" mat-table [dataSource]="playerRoomsDataSource" class="mat-elevation-z8">
+<table label="Комнаты в которых вы состоите" mat-table [dataSource]="playerRoomsDataSource" class="mat-elevation-z8, roomsPlayerInTable">
     <tr mat-header-row *matHeaderRowDef="displayedPlayersRooms"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedPlayersRooms;"></tr>
 
@@ -51,20 +51,22 @@
   </ng-container>
 </table>
 
+<br>
 
+<h3>Перейти к игре</h3>
 <form class="example-form">
-  <mat-form-field class="example-full-width">
+  <mat-form-field floatLabel="always" class="example-full-width">
     <mat-label>Введите токен</mat-label>
     <input [formControl]="userTokenFc" matInput>
   </mat-form-field>
 
-  <mat-form-field class="example-full-width">
+  <mat-form-field floatLabel="always" class="example-full-width">
     <mat-label>Комната</mat-label>
     <input id="passwordInput" placeholder="" value="" [formControl]="roomCodeFc" matInput>
   </mat-form-field>
 </form>
 
-<button mat-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonSignIn" color="primary">Update</button>
+<!--<button mat-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonSignIn" color="primary">Перейти в игру</button>-->
 
 
 

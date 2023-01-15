@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Присоединиться к комнате</h1>
+<div mat-dialog-content>
+  <p>Заполните поля</p>
+
+  <mat-form-field>
+    <mat-label>Номер комнаты</mat-label>
+    <input [formControl]="roomNumberFC" matInput>
+    <mat-error *ngIf="roomNumberFC.hasError('required')">Вы должны ввести имя</mat-error>
+    <mat-error *ngIf="roomNumberFC.hasError('blank')">Вы не выбрали комнату для вступления</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Пароль от комнаты</mat-label>
+    <input [formControl]="typedPasswordFC" matInput>
+  </mat-form-field>
+
+  <div>
+<!--      <button mat-button (click)="onSubmit()" [disabled]="roomNumberFC.invalid" id="buttonSignIn" color="primary">Присоединиться</button>&ndash;&gt;-->
+  </div>
+
+</div>

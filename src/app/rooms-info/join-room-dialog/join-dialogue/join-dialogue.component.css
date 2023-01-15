@@ -1,0 +1,14 @@
+.mat-dialog-content{
+  display: inline-block;
+  width: 5%;
+  height: 15%;
+}
+
+.cdk-overlay-pane{
+  font-family: Laksaman;
+}
+
+mat-form-field{
+  margin: 20px;
+  font-family: Laksaman;
+}
