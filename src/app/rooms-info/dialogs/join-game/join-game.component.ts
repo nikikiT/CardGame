@@ -34,13 +34,17 @@ export class JoinGameComponent {
         userToken: this.userToken || '',
         roomNumber: this.roomNumberFC.value || '',
       }
-      this.api.updateGame(invokerData.userToken,invokerData.roomNumber)
-        .subscribe(v=> {
-          this.dialogRef.close(true);
-          this.router.navigate(['gameTable']);
-        },error => {
-          alert('Упс! Простите, что-то пошло не так')
-        })
+      localStorage.setItem('gameRoomChosen',this.roomNumberFC.value || '' );
+      this.router.navigate(['game-table']);
+      this.dialogRef.close();
+      // this.api.updateGame(invokerData.userToken,invokerData.roomNumber)
+      //   .subscribe(v=> {
+      //     this.dialogRef.close(true);
+      //     localStorage.setItem('rout','')
+      //     this.router.navigate(['game-table']);
+      //   },error => {
+      //     alert('Упс! Простите, что-то пошло не так')
+      //   })
     }
   }
 

@@ -23,13 +23,12 @@ export class LoginComponent implements OnInit{
     password: this.password
   });
   constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
-    this.rout='login';
-    localStorage.setItem('rout',this.rout);
   }
 
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
 
   onSubmitReg(){
@@ -52,12 +51,11 @@ export class LoginComponent implements OnInit{
             return;
           }
           this.errorMsg = null;
-          console.log('User token '+this.userToken);
           localStorage.setItem('userToken',JSON.stringify(v.RESULTS[0]['Ваш_токен'][0]));
           this.messOfInfoResponse=v.RESULTS;
           localStorage.setItem('messOfInfoResponse',JSON.stringify(v.RESULTS));
           this.userToken=v.RESULTS[0]['Ваш_токен'][0];
-          this.router.navigate(['gamesHub']);
+          this.router.navigate(['games-hub']);
         },error => {
           alert('Упс! Простите, что-то пошло не так')
         })

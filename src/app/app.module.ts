@@ -34,12 +34,12 @@ const appRoutes: Routes = [
   },
 
   {
-    path: 'gamesHub',
+    path: 'games-hub',
     component: RoomsInfoComponent,
   },
 
   {
-    path: 'gameTable',
+    path: 'game-table',
     component: GameComponent,
   },
   {

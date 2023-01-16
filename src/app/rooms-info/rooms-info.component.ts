@@ -56,8 +56,6 @@ export class RoomsInfoComponent implements OnInit{
   playerRoomsDataSource: any[] = [];
 
   constructor(private api:ApiService, private router: Router, public dialog: MatDialog) {
-    this.rout='gamesHub';
-    localStorage.setItem('rout',this.rout);
   }
 
   joinGame(roomNumber: any, passwordForRoom: any) {
@@ -96,8 +94,12 @@ export class RoomsInfoComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.rout='games-hub';
+    localStorage.setItem('rout',this.rout);
+
     this.temporaryForMessInfo = JSON.parse(localStorage.getItem('messOfInfoResponse') || '');
     let roomData = this.temporaryForMessInfo[2];
+
     roomData['Логин_админа'].forEach((data: any, index: any) => { //Прошлись по колонке логин админа
       let roomInfo: any = {} //Чтобы собрать строку из колонок
       roomInfo.adminLogin = data
