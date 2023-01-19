@@ -26,7 +26,7 @@ export class RoomsInfoComponent implements OnInit{
     password: this.roomToEnterPassFc
   });
 
-  dataSource: any[] = [];
+  roomsDataSource: any[] = [];
   displayedColumns: string[] = [
     'roomCode',
     'adminLogin',
@@ -75,6 +75,7 @@ export class RoomsInfoComponent implements OnInit{
 
     //this.api.joinRoom(this.userToken,roomCode,'NULL');
     //this.router.navigate(['gameTable']);
+    //this.ngOnInit();
   }
 
   joinRoom(roomNumber: any, passwordForRoom: any){
@@ -87,13 +88,15 @@ export class RoomsInfoComponent implements OnInit{
     const dialogRef = this.dialog.open(JoinRoomComponent, {data:data});
     dialogRef.afterClosed().subscribe(v=>{
       if (v){
-        //обновление таблицы
+        this.getRoomsInfo();
       }
-
     })
   }
 
   ngOnInit() {
+    let newRooms: any[] = [];
+    let newPlayerRooms: any[] = [];
+    let newPlayersOnline: any[] = [];
     this.rout='games-hub';
     localStorage.setItem('rout',this.rout);
 
@@ -102,28 +105,69 @@ export class RoomsInfoComponent implements OnInit{
 
     roomData['Логин_админа'].forEach((data: any, index: any) => { //Прошлись по колонке логин админа
       let roomInfo: any = {} //Чтобы собрать строку из колонок
-      roomInfo.adminLogin = data
-      roomInfo.roomCode = roomData['Код_комнаты'][index]
-      roomInfo.passwordFromRoom = roomData['Пароль_от_комнаты'][index]
-      roomInfo.playersInRoom = roomData['Игроков_в_комнате'][index]
-      this.dataSource.push(roomInfo);
+      roomInfo.adminLogin = data;
+      roomInfo.roomCode = roomData['Код_комнаты'][index];
+      roomInfo.passwordFromRoom = roomData['Пароль_от_комнаты'][index];
+      roomInfo.playersInRoom = roomData['Игроков_в_комнате'][index];
+      newRooms.push(roomInfo);
     })
 
     let playersRoomData = this.temporaryForMessInfo[3];
     playersRoomData['Комнаты в которых вы состоите'].forEach((data: any) =>{
-      let playerRoomsInfo: any = {}
+      let playerRoomsInfo: any = {};
       playerRoomsInfo.roomCode=data;
-      this.playerRoomsDataSource.push(playerRoomsInfo);
+      newPlayerRooms.push(playerRoomsInfo);
     })
-
 
     let playersOnlineData = this.temporaryForMessInfo[1];
     playersOnlineData['Логин'].forEach((data: any, index: any) => {
       let onlinePlayersInfo: any = {}
       onlinePlayersInfo.playerLogin = data;
       //onlinePlayersInfo.lastTimeOnline = onlinePlayersInfo['Последнее_время_онлайн'][index];
-      this.playersOnlineDataSource.push(onlinePlayersInfo);
+      newPlayersOnline.push(onlinePlayersInfo);
     })
 
+    this.roomsDataSource = newRooms;
+    this.playerRoomsDataSource = newPlayerRooms
+    this.playersOnlineDataSource = newPlayersOnline
+  }
+
+  getRoomsInfo(){
+    let newRooms: any[] = [];
+    let newPlayerRooms: any[] = [];
+    let newPlayersOnline: any[] = [];
+    this.rout='games-hub';
+    localStorage.setItem('rout',this.rout);
+
+    this.temporaryForMessInfo = JSON.parse(localStorage.getItem('messOfInfoResponse') || '');
+    let roomData = this.temporaryForMessInfo[1];
+
+    roomData['Логин_админа'].forEach((data: any, index: any) => { //Прошлись по колонке логин админа
+      let roomInfo: any = {} //Чтобы собрать строку из колонок
+      roomInfo.adminLogin = data;
+      roomInfo.roomCode = roomData['Код_комнаты'][index];
+      roomInfo.passwordFromRoom = roomData['Пароль_от_комнаты'][index];
+      roomInfo.playersInRoom = roomData['Игроков_в_комнате'][index];
+      newRooms.push(roomInfo);
+    })
+
+    let playersRoomData = this.temporaryForMessInfo[2];
+    playersRoomData['Комнаты в которых вы состоите'].forEach((data: any) =>{
+      let playerRoomsInfo: any = {};
+      playerRoomsInfo.roomCode=data;
+      newPlayerRooms.push(playerRoomsInfo);
+    })
+
+    let playersOnlineData = this.temporaryForMessInfo[0];
+    playersOnlineData['Логин'].forEach((data: any, index: any) => {
+      let onlinePlayersInfo: any = {}
+      onlinePlayersInfo.playerLogin = data;
+      //onlinePlayersInfo.lastTimeOnline = onlinePlayersInfo['Последнее_время_онлайн'][index];
+      newPlayersOnline.push(onlinePlayersInfo);
+    })
+
+    this.roomsDataSource = newRooms;
+    this.playerRoomsDataSource = newPlayerRooms
+    this.playersOnlineDataSource = newPlayersOnline
   }
 }

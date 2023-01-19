@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="roomsDataSource" class="mat-elevation-z8">
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -52,10 +52,15 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumnsPlayersOnline;"></tr>
 
   <ng-container matColumnDef="playerLogin">
-    <th mat-header-cell *matHeaderCellDef>Логин игроков в сети</th>
+    <th mat-header-cell *matHeaderCellDef>Игроки в сети</th>
     <td mat-cell *matCellDef="let element"> {{element.playerLogin}} </td>
   </ng-container>
 </table>
+
+<ng-container>
+  <h3>Создать новую комнату</h3>
+  <button ></button>
+</ng-container>
 
 <br>
 

@@ -1,6 +1,26 @@
 .card{
-  height:10%;
-  width:7%;
+  height:60%;
+  width:10%;
   border: 1px solid black;
   box-shadow: darkgrey;
+}
+
+.card-container{
+  display: flex;
+}
+
+.player-container{
+  display: flex;
+}
+
+it{
+
+}
+
+.player-card-current{
+  background-color: darkseagreen;
+}
+
+.player-role-wrapper{
+
 }
