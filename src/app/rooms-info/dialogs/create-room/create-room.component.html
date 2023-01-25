@@ -1,0 +1,22 @@
+<div mat-dialog-content class="wrapper-dialog-new-room">
+  <h1 mat-dialog-title>Создать новую комнату</h1>
+
+<div class="wrapper-inputs-new-room">
+  <div style="width: 50%">
+    <mat-label>Время хода (в сек.)</mat-label><br/>
+    <mat-slider min="120" max="500" step="1" value="120" label="Время хода (в сек.)">
+      <input  matSliderThumb>
+    </mat-slider>
+  </div>
+  <mat-form-field>
+    <mat-label>Пароль для комнаты</mat-label>
+    <input [formControl]="newRoomPassword" matInput>
+    <mat-error></mat-error>
+  </mat-form-field>
+</div>
+
+  <div>
+    <button mat-button (click)="onSubmit()" id="buttonSignIn" color="primary">Создать комнату</button>
+  </div>
+
+</div>

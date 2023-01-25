@@ -19,6 +19,7 @@ import { JoinGameComponent } from './rooms-info/dialogs/join-game/join-game.comp
 import {MatDialogModule} from "@angular/material/dialog";
 import { JoinRoomComponent } from './rooms-info/dialogs/join-room/join-room.component';
 import { CreateRoomComponent } from './rooms-info/dialogs/create-room/create-room.component';
+import {MatSliderModule} from "@angular/material/slider";
 
 
 const appRoutes: Routes = [
@@ -78,7 +79,8 @@ const appRoutes: Routes = [
         MatTableModule,
         MatCardModule,
         MatDialogModule,
-        FormsModule
+        FormsModule,
+        MatSliderModule
     ],
   providers: [HttpClient, LoginComponent],
   bootstrap: [AppComponent]
