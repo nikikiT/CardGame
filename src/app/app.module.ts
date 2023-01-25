@@ -21,6 +21,7 @@ import { JoinRoomComponent } from './rooms-info/dialogs/join-room/join-room.comp
 import { CreateRoomComponent } from './rooms-info/dialogs/create-room/create-room.component';
 import {MatSliderModule} from "@angular/material/slider";
 import {HelperService} from "../services/helper.service";
+import { StartGameComponent } from './rooms-info/dialogs/start-game/start-game.component';
 
 
 const appRoutes: Routes = [
@@ -64,7 +65,8 @@ const appRoutes: Routes = [
     GameComponent,
     JoinGameComponent,
     JoinRoomComponent,
-    CreateRoomComponent
+    CreateRoomComponent,
+    StartGameComponent
   ],
     imports: [
         BrowserModule,

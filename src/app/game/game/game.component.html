@@ -17,6 +17,8 @@
   </mat-card>
 </div>
 <br>
+
+<mat-card>
 <div class="card-container">
   <mat-card [class.it]="cardInHand.title=='Нечто'" class="card" *ngFor="let cardInHand of cardsInHands">
     <mat-card-header>{{cardInHand.cardTitle}}</mat-card-header>
@@ -24,7 +26,7 @@
     <mat-label >{{cardInHand.cardNumber}}</mat-label>
   </mat-card>
 </div>
-
+</mat-card>
 
 
 

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Начать игру</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Номер комнаты</mat-label>
+    <input [formControl]="roomNumberFC" matInput>
+  </mat-form-field>
+
+  <div>
+    <button mat-raised-button (click)="onSubmit()" [disabled]="roomNumberFC.invalid" id="buttonSignIn" color="primary">Войти в комнату</button>
+  </div>
+
+</div>

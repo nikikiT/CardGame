@@ -4,9 +4,9 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-  <ng-container matColumnDef="roomCode">
+  <ng-container matColumnDef="roomNumber">
     <th mat-header-cell *matHeaderCellDef>Номер комнаты</th>
-    <td mat-cell *matCellDef="let element"> {{element.roomCode}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.roomNumber}} </td>
   </ng-container>
 
   <ng-container matColumnDef="adminLogin">
@@ -27,13 +27,19 @@
   <ng-container matColumnDef="buttonsToGetInRoom">
     <th mat-header-cell *matHeaderCellDef>Перейти к игре</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button (click)="joinGame(this.element.roomCode,this.element.passwordFromRoom)" color="primary">Играть</button>
+      <button mat-raised-button (click)="joinGame(this.element.roomNumber,this.element.passwordFromRoom)" color="primary">Играть</button>
+  </ng-container>
+
+  <ng-container matColumnDef="buttonsToStartGame">
+    <th mat-header-cell *matHeaderCellDef>Начать игру</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button (click)="startGame(this.element.roomNumber)" *ngIf="isGameStarted(element) && this.element.playersInRoom>3 " color="primary">Начать</button>
   </ng-container>
 
   <ng-container matColumnDef="buttonToJoin">
     <th mat-header-cell *matHeaderCellDef>Войти в комнату</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button (click)="joinRoom(this.element.roomCode,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Зайти</button>
+      <button mat-raised-button (click)="joinRoom(this.element.roomNumber,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Зайти</button>
     </td>
 
   </ng-container>
@@ -50,7 +56,7 @@
 
     <ng-container matColumnDef="room_code">
       <th mat-header-cell *matHeaderCellDef>Номер комнат в которых вы состоите</th>
-      <td mat-cell *matCellDef="let element"> {{element.roomCode}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.roomNumber}} </td>
     </ng-container>
   </table>
 
@@ -65,4 +71,21 @@
   </table>
 </mat-card>
 
+<!--  <mat-card class="flex">-->
+    <table mat-table [dataSource]="playersInRoomDataSource">
+      <tr mat-header-row *matHeaderRowDef="displayedPlayersInRooms"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedPlayersInRooms;"></tr>
+
+      <ng-container matColumnDef="playerLogin">
+        <th mat-header-cell *matHeaderCellDef>Логин игрока в комнате</th>
+        <td mat-cell *matCellDef="let element"> {{element.playerLogin}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="roomNumber">
+        <th mat-header-cell *matHeaderCellDef>Номер комнаты</th>
+        <td mat-cell *matCellDef="let element"> {{element.roomNumber}} </td>
+      </ng-container>
+
+    </table>
+<!--  </mat-card>-->
 </div>

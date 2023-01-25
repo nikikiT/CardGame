@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {JoinRoomComponent} from "./dialogs/join-room/join-room.component";
 import {CreateRoomComponent} from "./dialogs/create-room/create-room.component";
 import {HelperService} from "../../services/helper.service";
+import {StartGameComponent} from "./dialogs/start-game/start-game.component";
 
 @Component({
   // selector: 'parent-component',
@@ -30,13 +31,23 @@ export class RoomsInfoComponent implements OnInit{
 
   roomsDataSource: any[] = [];
   displayedColumns: string[] = [
-    'roomCode',
+    'roomNumber',
     'adminLogin',
     'passwordFromRoom',
     'playersInRoom',
     'buttonToJoin',
-    'buttonsToGetInRoom'
+    'buttonsToStartGame',
+    'buttonsToGetInRoom',
   ];
+
+  displayedPlayersInRooms: string[] = [
+      'playerLogin',
+      'roomNumber'
+  ];
+
+  playersInRoomDataSource: any[] = [];
+
+  startedRoomsDataSource: any[] = [];
 
   rout:any;
 
@@ -51,7 +62,7 @@ export class RoomsInfoComponent implements OnInit{
 
   playersOnlineDataSource: any[] = [];
 
-  displayedPlayersRooms: any[] = [
+  displayedPlayersRooms: string[] = [
     'room_code'
   ];
 
@@ -76,7 +87,7 @@ export class RoomsInfoComponent implements OnInit{
     this.userToken = JSON.parse(localStorage.getItem('userToken') || '');
     localStorage.setItem('roomNumberChosen', roomNumber);
 
-    //this.api.joinRoom(this.userToken,roomCode,'NULL');
+    //this.api.joinRoom(this.userToken,roomNumber,'NULL');
     //this.router.navigate(['gameTable']).then(
     //       ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());
     //this.ngOnInit();
@@ -97,6 +108,13 @@ export class RoomsInfoComponent implements OnInit{
     })
   }
 
+  startGame(roomNumber: any){
+    const dialogStartGameRef = this.dialog.open(StartGameComponent,{}).afterClosed()
+      .subscribe( v =>{
+        if (v)
+          this.getRoomsInfo();
+      });
+  }
   createRoom(){
     const dialogCreateRoomRef = this.dialog.open(CreateRoomComponent, {}).afterClosed().subscribe( v =>{
       if(v)
@@ -133,6 +151,9 @@ export class RoomsInfoComponent implements OnInit{
     let newRooms: any[] = [];
     let newPlayerRooms: any[] = [];
     let newPlayersOnline: any[] = [];
+    let newPlayersInRooms: any[] = [];
+    let newStarted: any[] = [];
+
     this.rout='games-hub';
     localStorage.setItem('rout',this.rout);
 
@@ -142,18 +163,17 @@ export class RoomsInfoComponent implements OnInit{
     roomData['Логин_админа'].forEach((data: any, index: any) => { //Прошлись по колонке логин админа
       let roomInfo: any = {} //Чтобы собрать строку из колонок
       roomInfo.adminLogin = data;
-      roomInfo.roomCode = roomData['Код_комнаты'][index];
+      roomInfo.roomNumber = roomData['Код_комнаты'][index];
       roomInfo.passwordFromRoom = roomData['Пароль_от_комнаты'][index];
       roomInfo.playersInRoom = roomData['Игроков_в_комнате'][index];
       newRooms.push(roomInfo);
-    })
-
+    });
     let playersRoomData = this.temporaryForMessInfo[3];
     playersRoomData['Комнаты в которых вы состоите'].forEach((data: any) =>{
       let playerRoomsInfo: any = {};
-      playerRoomsInfo.roomCode=data;
+      playerRoomsInfo.roomNumber=data;
       newPlayerRooms.push(playerRoomsInfo);
-    })
+    });
 
     let playersOnlineData = this.temporaryForMessInfo[1];
     playersOnlineData['Логин'].forEach((data: any, index: any) => {
@@ -161,10 +181,32 @@ export class RoomsInfoComponent implements OnInit{
       onlinePlayersInfo.playerLogin = data;
       //onlinePlayersInfo.lastTimeOnline = onlinePlayersInfo['Последнее_время_онлайн'][index];
       newPlayersOnline.push(onlinePlayersInfo);
-    })
+    });
+
+    let playersInRoomsData = this.temporaryForMessInfo[4];
+    playersInRoomsData['Логин'].forEach((data: any, index: any) =>{
+      let playersInRoomsInfo: any = {}
+      playersInRoomsInfo.playerLogin=data;
+      playersInRoomsInfo.roomNumber = playersInRoomsData['Номер комнаты'][index];
+      newPlayersInRooms.push(playersInRoomsInfo);
+    });
+
+    let startedRoomsData = this.temporaryForMessInfo[5];
+    startedRoomsData['Номер комнат начатых игр'].forEach((data: any) =>{
+      let startedRoomsInfo: any = {}
+      startedRoomsInfo.roomNumber = data;
+      newStarted.push(startedRoomsInfo);
+      console.log(newStarted)
+    });
 
     this.roomsDataSource = newRooms;
-    this.playerRoomsDataSource = newPlayerRooms
-    this.playersOnlineDataSource = newPlayersOnline
+    this.playerRoomsDataSource = newPlayerRooms;
+    this.playersOnlineDataSource = newPlayersOnline;
+    this.playersInRoomDataSource = newPlayersInRooms;
+    this.startedRoomsDataSource = newStarted;
+  }
+
+  isGameStarted(room:any){
+    return !this.startedRoomsDataSource.some(p=>p.roomNumber==room.roomNumber)
   }
 }

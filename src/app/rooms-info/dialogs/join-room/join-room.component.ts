@@ -44,7 +44,7 @@ export class JoinRoomComponent {
             this.dialogRef.close(true);
           });
         },error => {
-          alert('Упс! Простите, что-то пошло не так')
+          alert('Упс! Простите, что-то пошло не так с присоединением к комнате')
         })
     }
   }
