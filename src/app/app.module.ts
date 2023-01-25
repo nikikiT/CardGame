@@ -27,13 +27,13 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    //outlet: 'popup'
+
   },
 
   {
     path: 'register',
     component: RegisterComponent,
-    //outlet: 'popup'
+
   },
 
   {

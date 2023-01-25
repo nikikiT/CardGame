@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit{
       this.api.signIn(capsuleForLogin)
         .subscribe(v=> {
           //v.RESULTS - это массив из 4 объектов из которых 0-й - содержит токен.
+
           if (v.RESULTS[0].rus_error) {
             this.errorMsg = v.RESULTS[0].rus_error[0]
             alert(this.errorMsg)
@@ -55,10 +56,11 @@ export class LoginComponent implements OnInit{
           this.errorMsg = null;
           localStorage.setItem('userToken',JSON.stringify(v.RESULTS[0]['Ваш_токен'][0]));
           this.messOfInfoResponse=v.RESULTS;
+          console.log(v.RESULTS);
           localStorage.setItem('messOfInfoResponse',JSON.stringify(v.RESULTS));
           this.userToken=v.RESULTS[0]['Ваш_токен'][0];
           this.router.navigate(['games-hub']).then(
-            ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());;
+            ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());
         },error => {
           alert('Упс! Простите, что-то пошло не так')
         })

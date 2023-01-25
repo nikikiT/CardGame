@@ -106,6 +106,7 @@ export class RoomsInfoComponent implements OnInit{
 
   manageResponse(){
     this.userToken = JSON.parse(localStorage.getItem('userToken') || '');
+    console.log(this.userToken);
     this.api.updateInfo(this.userToken).subscribe(v =>{
       if (v.RESULTS[0].rus_error) {
         this.errorMsg = v.RESULTS[0].rus_error[0]
@@ -125,42 +126,7 @@ export class RoomsInfoComponent implements OnInit{
 
   ngOnInit() {
     this.manageResponse();
-    let newRooms: any[] = [];
-    let newPlayerRooms: any[] = [];
-    let newPlayersOnline: any[] = [];
-    this.rout='games-hub';
-    localStorage.setItem('rout',this.rout);
-
-    this.temporaryForMessInfo = JSON.parse(localStorage.getItem('messOfInfoResponse') || '');
-    let roomData = this.temporaryForMessInfo[1];
-
-    roomData['Логин_админа'].forEach((data: any, index: any) => { //Прошлись по колонке логин админа
-      let roomInfo: any = {} //Чтобы собрать строку из колонок
-      roomInfo.adminLogin = data;
-      roomInfo.roomCode = roomData['Код_комнаты'][index];
-      roomInfo.passwordFromRoom = roomData['Пароль_от_комнаты'][index];
-      roomInfo.playersInRoom = roomData['Игроков_в_комнате'][index];
-      newRooms.push(roomInfo);
-    })
-
-    let playersRoomData = this.temporaryForMessInfo[2];
-    playersRoomData['Комнаты в которых вы состоите'].forEach((data: any) =>{
-      let playerRoomsInfo: any = {};
-      playerRoomsInfo.roomCode=data;
-      newPlayerRooms.push(playerRoomsInfo);
-    })
-
-    let playersOnlineData = this.temporaryForMessInfo[0];
-    playersOnlineData['Логин'].forEach((data: any, index: any) => {
-      let onlinePlayersInfo: any = {}
-      onlinePlayersInfo.playerLogin = data;
-      //onlinePlayersInfo.lastTimeOnline = onlinePlayersInfo['Последнее_время_онлайн'][index];
-      newPlayersOnline.push(onlinePlayersInfo);
-    })
-
-    this.roomsDataSource = newRooms;
-    this.playerRoomsDataSource = newPlayerRooms
-    this.playersOnlineDataSource = newPlayersOnline
+    this.getRoomsInfo();
   }
 
   getRoomsInfo(){
@@ -171,8 +137,8 @@ export class RoomsInfoComponent implements OnInit{
     localStorage.setItem('rout',this.rout);
 
     this.temporaryForMessInfo = JSON.parse(localStorage.getItem('messOfInfoResponse') || '');
-    let roomData = this.temporaryForMessInfo[1];
 
+    let roomData = this.temporaryForMessInfo[2];
     roomData['Логин_админа'].forEach((data: any, index: any) => { //Прошлись по колонке логин админа
       let roomInfo: any = {} //Чтобы собрать строку из колонок
       roomInfo.adminLogin = data;
@@ -182,14 +148,14 @@ export class RoomsInfoComponent implements OnInit{
       newRooms.push(roomInfo);
     })
 
-    let playersRoomData = this.temporaryForMessInfo[2];
+    let playersRoomData = this.temporaryForMessInfo[3];
     playersRoomData['Комнаты в которых вы состоите'].forEach((data: any) =>{
       let playerRoomsInfo: any = {};
       playerRoomsInfo.roomCode=data;
       newPlayerRooms.push(playerRoomsInfo);
     })
 
-    let playersOnlineData = this.temporaryForMessInfo[0];
+    let playersOnlineData = this.temporaryForMessInfo[1];
     playersOnlineData['Логин'].forEach((data: any, index: any) => {
       let onlinePlayersInfo: any = {}
       onlinePlayersInfo.playerLogin = data;
