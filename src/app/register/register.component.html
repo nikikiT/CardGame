@@ -1,3 +1,5 @@
+
+<mat-card class="auth-card">
 <div class="entry-point">
   <h1>Регистрация</h1>
 
@@ -17,8 +19,8 @@
 
   <section>
     <div class="example-button-row">
-      <button ngMode mat-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonRegister" color="primary">Зарегистрироваться</button> или
-      <button ngMode mat-button (click)="onSubmitSignIn()" id="routToRegister" color="primary">Перейти ко входу</button>
+      <button ngMode mat-raised-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonRegister" color="primary">Зарегистрироваться</button> или
+      <button ngMode mat-raised-button (click)="onSubmitSignIn()" id="routToRegister" color="primary">Перейти ко входу</button>
     </div>
   </section>
 
@@ -30,3 +32,4 @@
   <!--  Почитать инпут и аутпут элементы и двусторонее связывание!-->
 
 </div>
+</mat-card>

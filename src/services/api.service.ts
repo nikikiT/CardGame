@@ -44,15 +44,15 @@ export class ApiService {
     return  this.http.post(this.URL,fd)
   }
 
-  newRoom(token: string, roundDuration: string, password: string): Observable<any>{
+  newRoom(token: string, roomData: any): Observable<any>{
 
     let fd = new FormData();
     fd.append('pname','new_room');
     fd.append('db','298479');
     fd.append('format','columns_compact');
     fd.append('p1',token);
-    fd.append('p2',roundDuration);
-    fd.append('p3',password);
+    fd.append('p2',roomData.duration);
+    fd.append('p3',roomData.password);
 
     return  this.http.post(this.URL,fd)
   }

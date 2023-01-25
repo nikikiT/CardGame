@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {HelperService} from "../../services/helper.service";
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent {
   );
 
   errorMsg = null
-  constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
+  constructor(private api:ApiService, private router: Router, private helper: HelperService) { //Здесь можно инджектить компоненты
   }
 
   onSubmitSignIn(){
@@ -42,7 +43,8 @@ export class RegisterComponent {
           alert(this.errorMsg)
           return;
         }
-        this.router.navigate(['login']);
+        this.router.navigate(['login']).then(
+          ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());
       }, error => {
         alert('Сервер не смог вас зарегистрировать');
       });

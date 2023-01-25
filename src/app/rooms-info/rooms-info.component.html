@@ -1,3 +1,5 @@
+
+<div class="container">
 <table mat-table [dataSource]="roomsDataSource" class="mat-elevation-z8">
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -25,23 +27,24 @@
   <ng-container matColumnDef="buttonsToGetInRoom">
     <th mat-header-cell *matHeaderCellDef>Перейти к игре</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-button (click)="joinGame(this.element.roomCode,this.element.passwordFromRoom)" color="primary">Играть</button>
+      <button mat-raised-button (click)="joinGame(this.element.roomCode,this.element.passwordFromRoom)" color="primary">Играть</button>
   </ng-container>
 
   <ng-container matColumnDef="buttonToJoin">
     <th mat-header-cell *matHeaderCellDef>Войти в комнату</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-button (click)="joinRoom(this.element.roomCode,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Зайти</button>
+      <button mat-raised-button (click)="joinRoom(this.element.roomCode,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Зайти</button>
     </td>
 
   </ng-container>
 </table>
 
-<ng-container>
-  <button color="primary" mat-button (click)="createRoom()">Создать новую комнату</button>
-</ng-container>
 
-<table label="Комнаты в которых вы состоите" mat-table [dataSource]="playerRoomsDataSource" class="mat-elevation-z8, roomsPlayerInTable">
+  <button id="create-room-button" mat-raised-button color="primary" (click)="createRoom()">Создать новую комнату</button>
+
+
+<mat-card class="flex">
+  <table label="Комнаты в которых вы состоите" mat-table [dataSource]="playerRoomsDataSource" class="mat-elevation-z8, rooms-player-in-table">
     <tr mat-header-row *matHeaderRowDef="displayedPlayersRooms"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedPlayersRooms;"></tr>
 
@@ -51,17 +54,15 @@
     </ng-container>
   </table>
 
-<table label="Игроки онлайн" mat-table [dataSource]="playersOnlineDataSource" class="mat-elevation-z8">
-  <tr mat-header-row *matHeaderRowDef="displayedColumnsPlayersOnline"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumnsPlayersOnline;"></tr>
+  <table label="Игроки онлайн" mat-table [dataSource]="playersOnlineDataSource" class="mat-elevation-z8 players-online">
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsPlayersOnline"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsPlayersOnline;"></tr>
 
-  <ng-container matColumnDef="playerLogin">
-    <th mat-header-cell *matHeaderCellDef>Игроки в сети</th>
-    <td mat-cell *matCellDef="let element"> {{element.playerLogin}} </td>
-  </ng-container>
-</table>
+    <ng-container matColumnDef="playerLogin">
+      <th mat-header-cell *matHeaderCellDef>Игроки в сети</th>
+      <td mat-cell *matCellDef="let element"> {{element.playerLogin}} </td>
+    </ng-container>
+  </table>
+</mat-card>
 
-
-
-<br>
-
+</div>

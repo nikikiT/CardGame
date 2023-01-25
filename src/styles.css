@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+.flex{
+  display: flex!important;
+  flex-direction: row!important;
+}
+
+.auth-card{
+  display: flex;
+  margin-top: 10%;
+  margin-left: 35%;
+  margin-right: 35%;
+  padding: 0% 4% 4% 4%;
+
+}
+
+
+
+body{
+  background-image: url('assets/backgrounds/background_start.jpg');
+  background-size: 100%;
+}
+
+/*app-rooms-info{*/
+/*  background-image: url("src/assets/backgrounds/back_game_2.png");*/
+/*  background-size: 100%;*/
+/*}*/

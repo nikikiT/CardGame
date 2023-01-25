@@ -1,3 +1,5 @@
+
+<mat-card class="auth-card">
 <div class="entry-point">
   <h2>Выполните вход</h2>
 
@@ -17,10 +19,12 @@
   <section>
     <div class="example-button-row">
 
-      <button mat-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonSignIn" color="primary">Войти</button> или
-      <button mat-button (click)="onSubmitReg()" id="routToRegister" color="primary">Перейти к регистрации</button>
+      <button mat-raised-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonSignIn" color="primary">Войти</button> или
+      <button mat-raised-button (click)="onSubmitReg()" id="routToRegister" color="primary">Перейти к регистрации</button>
     </div>
   </section>
+
+
 
 <!--Желтенькое - навести и посикать предложения к исправлени (что импортировать). Желтенькое значит не скачено.-->
 <!--Форм контролы можно объединять в форм группы и проверять валидность сразу набора форм контролов. -->
@@ -30,6 +34,6 @@
   <!--  Почитать инпут и аутпут элементы и двусторонее связывание!-->
 
 </div>
-
+</mat-card>
 
 

@@ -7,6 +7,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {JoinRoomComponent} from "./dialogs/join-room/join-room.component";
 import {CreateRoomComponent} from "./dialogs/create-room/create-room.component";
+import {HelperService} from "../../services/helper.service";
 
 @Component({
   // selector: 'parent-component',
@@ -40,7 +41,7 @@ export class RoomsInfoComponent implements OnInit{
   rout:any;
 
   temporaryPlayersOnline: any;
-
+  errorMsg: any;
   roomNumberChosen: any;
 
   displayedColumnsPlayersOnline: string[] = [
@@ -55,8 +56,9 @@ export class RoomsInfoComponent implements OnInit{
   ];
 
   playerRoomsDataSource: any[] = [];
+  private messOfInfoResponse: any;
 
-  constructor(private api:ApiService, private router: Router, public dialog: MatDialog) {
+  constructor(private api:ApiService, private router: Router, public dialog: MatDialog, public helper: HelperService) {
   }
 
   joinGame(roomNumber: any, passwordForRoom: any) {
@@ -75,7 +77,8 @@ export class RoomsInfoComponent implements OnInit{
     localStorage.setItem('roomNumberChosen', roomNumber);
 
     //this.api.joinRoom(this.userToken,roomCode,'NULL');
-    //this.router.navigate(['gameTable']);
+    //this.router.navigate(['gameTable']).then(
+    //       ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());
     //this.ngOnInit();
   }
 
@@ -95,11 +98,33 @@ export class RoomsInfoComponent implements OnInit{
   }
 
   createRoom(){
+    const dialogCreateRoomRef = this.dialog.open(CreateRoomComponent, {}).afterClosed().subscribe( v =>{
+      if(v)
+        this.getRoomsInfo();
+    });
+  }
 
-    const dialogCreateRoomRef = this.dialog.open(CreateRoomComponent, {});
+  manageResponse(){
+    this.userToken = JSON.parse(localStorage.getItem('userToken') || '');
+    this.api.updateInfo(this.userToken).subscribe(v =>{
+      if (v.RESULTS[0].rus_error) {
+        this.errorMsg = v.RESULTS[0].rus_error[0]
+        alert(this.errorMsg)
+        return;
+      }
+      this.errorMsg = null;
+      //localStorage.setItem('userToken',JSON.stringify(v.RESULTS[0]['Ваш_токен'][0]));
+      this.messOfInfoResponse=v.RESULTS;
+      localStorage.setItem('messOfInfoResponse',JSON.stringify(v.RESULTS));
+      this.userToken=v.RESULTS[0]['Ваш_токен'][0];
+    }, error => {
+      alert('Упс! Простите, что-то пошло не так')
+    });
+
   }
 
   ngOnInit() {
+    this.manageResponse();
     let newRooms: any[] = [];
     let newPlayerRooms: any[] = [];
     let newPlayersOnline: any[] = [];
@@ -107,7 +132,7 @@ export class RoomsInfoComponent implements OnInit{
     localStorage.setItem('rout',this.rout);
 
     this.temporaryForMessInfo = JSON.parse(localStorage.getItem('messOfInfoResponse') || '');
-    let roomData = this.temporaryForMessInfo[2];
+    let roomData = this.temporaryForMessInfo[1];
 
     roomData['Логин_админа'].forEach((data: any, index: any) => { //Прошлись по колонке логин админа
       let roomInfo: any = {} //Чтобы собрать строку из колонок
@@ -118,14 +143,14 @@ export class RoomsInfoComponent implements OnInit{
       newRooms.push(roomInfo);
     })
 
-    let playersRoomData = this.temporaryForMessInfo[3];
+    let playersRoomData = this.temporaryForMessInfo[2];
     playersRoomData['Комнаты в которых вы состоите'].forEach((data: any) =>{
       let playerRoomsInfo: any = {};
       playerRoomsInfo.roomCode=data;
       newPlayerRooms.push(playerRoomsInfo);
     })
 
-    let playersOnlineData = this.temporaryForMessInfo[1];
+    let playersOnlineData = this.temporaryForMessInfo[0];
     playersOnlineData['Логин'].forEach((data: any, index: any) => {
       let onlinePlayersInfo: any = {}
       onlinePlayersInfo.playerLogin = data;

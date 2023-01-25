@@ -21,7 +21,9 @@ export class JoinRoomComponent {
                private router: Router,
                public dialogRef: MatDialogRef<JoinRoomComponent>,
 
-  ) {
+  )
+
+  {
     this.roomNumberChosen=data.roomNumber;
     this.roomNumberFC.setValue(this.roomNumberChosen)
     this.userToken=localStorage.getItem('userToken');
@@ -38,7 +40,7 @@ export class JoinRoomComponent {
         .subscribe((v: any)=> {
           this.api.updateInfo(this.userToken).subscribe((r:any)=>{
             localStorage.setItem('messOfInfoResponse',JSON.stringify(r.RESULTS));
-            console.log(r.RESULTS);
+            //console.log(r.RESULTS);
             this.dialogRef.close(true);
           });
         },error => {

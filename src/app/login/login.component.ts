@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ApiService} from "../../services/api.service";
 import {Router} from "@angular/router";
+import {HelperService} from "../../services/helper.service";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit{
     login: this.login,
     password: this.password
   });
-  constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
+  constructor(private api:ApiService, private router: Router, private helper: HelperService) { //Здесь можно инджектить компоненты
   }
 
 
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit{
 
 
   onSubmitReg(){
-    this.router.navigate(['register'])
+    this.router.navigate(['register']).then(
+      ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());
   }
 
   onSubmit(){ //при нажатии на сабмит он проверяет
@@ -55,7 +57,8 @@ export class LoginComponent implements OnInit{
           this.messOfInfoResponse=v.RESULTS;
           localStorage.setItem('messOfInfoResponse',JSON.stringify(v.RESULTS));
           this.userToken=v.RESULTS[0]['Ваш_токен'][0];
-          this.router.navigate(['games-hub']);
+          this.router.navigate(['games-hub']).then(
+            ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());;
         },error => {
           alert('Упс! Простите, что-то пошло не так')
         })

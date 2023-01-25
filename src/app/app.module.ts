@@ -20,6 +20,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { JoinRoomComponent } from './rooms-info/dialogs/join-room/join-room.component';
 import { CreateRoomComponent } from './rooms-info/dialogs/create-room/create-room.component';
 import {MatSliderModule} from "@angular/material/slider";
+import {HelperService} from "../services/helper.service";
 
 
 const appRoutes: Routes = [
@@ -82,7 +83,7 @@ const appRoutes: Routes = [
         FormsModule,
         MatSliderModule
     ],
-  providers: [HttpClient, LoginComponent],
+  providers: [HttpClient, LoginComponent, HelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
