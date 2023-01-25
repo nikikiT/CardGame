@@ -6,6 +6,7 @@ import {JoinGameComponent} from "./dialogs/join-game/join-game.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {JoinRoomComponent} from "./dialogs/join-room/join-room.component";
+import {CreateRoomComponent} from "./dialogs/create-room/create-room.component";
 
 @Component({
   // selector: 'parent-component',
@@ -91,6 +92,11 @@ export class RoomsInfoComponent implements OnInit{
         this.getRoomsInfo();
       }
     })
+  }
+
+  createRoom(){
+
+    const dialogCreateRoomRef = this.dialog.open(CreateRoomComponent, {});
   }
 
   ngOnInit() {

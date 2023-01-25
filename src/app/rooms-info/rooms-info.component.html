@@ -37,6 +37,10 @@
   </ng-container>
 </table>
 
+<ng-container>
+  <button color="primary" mat-button (click)="createRoom()">Создать новую комнату</button>
+</ng-container>
+
 <table label="Комнаты в которых вы состоите" mat-table [dataSource]="playerRoomsDataSource" class="mat-elevation-z8, roomsPlayerInTable">
     <tr mat-header-row *matHeaderRowDef="displayedPlayersRooms"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedPlayersRooms;"></tr>
@@ -57,10 +61,7 @@
   </ng-container>
 </table>
 
-<ng-container>
-  <h3>Создать новую комнату</h3>
-  <button ></button>
-</ng-container>
+
 
 <br>
 

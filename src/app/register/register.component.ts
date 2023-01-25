@@ -17,21 +17,35 @@ export class RegisterComponent {
       login: this.login,
       password: this.password
     }
-  )
+  );
+
+  errorMsg = null
   constructor(private api:ApiService, private router: Router) { //Здесь можно инджектить компоненты
-    this.rout='register';
-    localStorage.setItem('rout',this.rout);
   }
-
-
-
 
   onSubmitSignIn(){
     this.router.navigate(['login']);
   }
 
-  onSubmit(){
+  onSubmit() {
+    this.rout = 'register';
+    localStorage.setItem('rout', this.rout);
+    let dataToRegister = {
+      login: this.login.value || '',
+      password: this.password.value || '',
+    }
 
+    this.api.regNewUser(dataToRegister.login, dataToRegister.password)
+      .subscribe(v => {
+        if (v.RESULTS[0].rus_error){
+          this.errorMsg = v.RESULTS[0].rus_error[0];
+          alert(this.errorMsg)
+          return;
+        }
+        this.router.navigate(['login']);
+      }, error => {
+        alert('Сервер не смог вас зарегистрировать');
+      });
 
   }
 

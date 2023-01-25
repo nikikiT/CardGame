@@ -10,12 +10,14 @@
     <mat-form-field floatLabel="always" class="example-full-width">
       <mat-label>Пароль</mat-label>
       <input id="passwordInput" placeholder="" value="" [formControl]="password" matInput>
+      <mat-error *ngIf="login.hasError('required')">Вы не ввели логин</mat-error>
+      <mat-error *ngIf="password.hasError('required')">Вы не ввели пароль</mat-error>
     </mat-form-field>
   </form>
 
   <section>
     <div class="example-button-row">
-      <button ngMode mat-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonSignIn" color="primary">Зарегистрироваться</button> или
+      <button ngMode mat-button (click)="onSubmit()" [disabled]="fg.invalid" id="buttonRegister" color="primary">Зарегистрироваться</button> или
       <button ngMode mat-button (click)="onSubmitSignIn()" id="routToRegister" color="primary">Перейти ко входу</button>
     </div>
   </section>
