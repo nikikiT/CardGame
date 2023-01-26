@@ -147,6 +147,11 @@ export class RoomsInfoComponent implements OnInit{
     this.getRoomsInfo();
   }
 
+  goBackToLogin(){
+    this.router.navigate(['login']).then(
+           ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());
+  }
+
   getRoomsInfo(){
     let newRooms: any[] = [];
     let newPlayerRooms: any[] = [];
