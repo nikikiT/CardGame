@@ -24,6 +24,9 @@ import {HelperService} from "../services/helper.service";
 import { StartGameComponent } from './rooms-info/dialogs/start-game/start-game.component';
 import { CardsInHandsComponent } from './game/game/dialogs/cards-in-hands/cards-in-hands.component';
 import { EffectComponent } from './game/game/dialogs/effect/effect.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatSelectModule} from "@angular/material/select";
+
 
 
 const appRoutes: Routes = [
@@ -72,23 +75,25 @@ const appRoutes: Routes = [
     CardsInHandsComponent,
     EffectComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        MatInputModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        RouterModule.forRoot(
-            appRoutes,
-        ),
-        MatButtonModule,
-        MatTableModule,
-        MatCardModule,
-        MatDialogModule,
-        FormsModule,
-        MatSliderModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    RouterModule.forRoot(
+      appRoutes,
+    ),
+    MatButtonModule,
+    MatTableModule,
+    MatCardModule,
+    MatDialogModule,
+    FormsModule,
+    MatSliderModule,
+    MatMenuModule,
+    MatSelectModule
+  ],
   providers: [HttpClient, LoginComponent, HelperService],
   bootstrap: [AppComponent]
 })

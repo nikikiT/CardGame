@@ -40,7 +40,6 @@ export class JoinRoomComponent {
         .subscribe((v: any)=> {
           this.api.updateInfo(this.userToken).subscribe((r:any)=>{
             localStorage.setItem('messOfInfoResponse',JSON.stringify(r.RESULTS));
-            //console.log(r.RESULTS);
             this.dialogRef.close(true);
           });
         },error => {

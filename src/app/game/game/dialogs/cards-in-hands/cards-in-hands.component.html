@@ -1,1 +1,39 @@
-<p>cards-in-hands works!</p>
+<h1 mat-dialog-title>Выбор действия для карты {{this.cardTitle}}</h1>
+<div mat-dialog-content class="buttons-container">
+
+
+    <button (click)="openAdditionalMenu=!openAdditionalMenu" mat-raised-button color="primary">Сыграть</button>
+
+  <p *ngIf="openAdditionalMenu" class="buttons-container">
+
+    <mat-form-field *ngIf="chooseTarget">
+      <mat-label>Выбор игрока</mat-label>
+      <mat-select [(ngModel)]="selectedTarget">
+        <mat-option [value]="player.login" *ngFor="let player of players">{{player.login}}</mat-option>
+      </mat-select>
+
+    </mat-form-field>
+    <mat-form-field *ngIf="chooseCard" >
+      <mat-label>Выбор игрока</mat-label>
+      <mat-select [(ngModel)]="selectedCard">
+        <mat-option [value]="card.id" *ngFor="let card of cardsInHands">{{card.cardTitle}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button (click)="toPlay()" mat-raised-button color="primary">Разыграть</button>
+
+  </p>
+
+
+    <button mat-raised-button color="primary">Сброс</button>
+
+
+
+    <button mat-raised-button color="primary">Обмен</button>
+
+
+
+    <button *ngIf="card.cardType=='Защита'" mat-raised-button color="primary">Защита</button>
+
+
+</div>

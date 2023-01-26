@@ -9,7 +9,7 @@
   margin-top: 10%;
   margin-left: 35%;
   margin-right: 35%;
-  padding: 0% 4% 4% 4%;
+  padding: 0 4% 4% 4%;
 
 }
 
@@ -36,14 +36,13 @@
   height: 100%;
   margin: 3%;
   justify-content: center;
+
 }
 
-.game-card-wrapper{
-  display: flex;
-  float: bottom;
-  justify-content: center;
-  margin-top: 10%;
+.buttons-container>*{
+  margin: 5px;
 }
+
 
 .card{
   background-size: 100%;
@@ -53,6 +52,12 @@
 body{
   background-image: url('assets/backgrounds/background_start.jpg');
   background-size: 100%;
+  font-size: 20px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.right-panel{
+  justify-content: right;
 }
 
 /*app-rooms-info{*/

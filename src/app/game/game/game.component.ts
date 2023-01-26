@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../../services/api.service";
 import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CardsInHandsComponent} from "./dialogs/cards-in-hands/cards-in-hands.component";
 
 @Component({
   selector: 'app-game',
@@ -15,22 +17,38 @@ export class GameComponent implements OnInit {
   temporaryMessInfo: any;
   dataSource: any[] = [];
   rout: any;
-
-  constructor(private api: ApiService, private router: Router, public helper: HelperService ) {
-  }
-
   cardsInHands: any[] = [];
   players: any[] = [];
   timer: any;
   role:any;
   currentMover:any;
+  message: any;
 
+  constructor(private api: ApiService, private router: Router, public helper: HelperService, public dialog: MatDialog ) {
+  }
   backToInfo(){
     this.router.navigate(['games-hub']).then(
       ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL())
   }
 
-  ngOnInit(): void {
+  pickCard(card: any){
+    let data = {
+      cardTitle: card.cardTitle,
+      cardsInHands: this.cardsInHands.filter(c=>c.id!=card.id),
+      players: this.players.filter(p=>p.login!=localStorage.getItem('myLogin')),
+      chooseTarget: ['Огнемет','Топор','Подозрение','Меняемся местами!','Сматывай уточки!', 'Соблазн','Заколоченная дверь'].includes(card.cardTitle),
+      chooseCard: ['Соблазн','Свидание вслепую'].includes(card.cardTitle),
+      card: card
+    }
+    const cardFromHeadDialogRef = this.dialog.open(CardsInHandsComponent, {data:data});
+    cardFromHeadDialogRef.afterClosed().subscribe(v=>{
+      if(v){
+        this.getGameInfo();
+      }
+    })
+  }
+
+  getGameInfo(){
     this.userToken = localStorage.getItem('userToken');
     this.currentRoomCode = localStorage.getItem('gameRoomChosen');
 
@@ -40,7 +58,7 @@ export class GameComponent implements OnInit {
     this.api.updateGame(this.userToken, this.currentRoomCode).subscribe(v => {
       this.temporaryMessInfo = v.RESULTS;
       localStorage.setItem('temporaryMessInfo', JSON.stringify(v.RESULTS));
-
+      this.message=v.RESULTS[1]['update_message'][0]
 
       let cards = this.temporaryMessInfo[4]
       cards['Номер_ваших_карт'].forEach((data: any, index: any) => {
@@ -86,6 +104,7 @@ export class GameComponent implements OnInit {
         cardInf.cardNumber = data;
         cardInf.cardDescription = cards['Описание_ваших_карт'][index];
         cardInf.cardTitle = cards['Названия_ваших_карт'][index];
+        cardInf.cardType = cards['Тип карты'][index];
         this.cardsInHands.push(cardInf);
       });
 
@@ -104,5 +123,10 @@ export class GameComponent implements OnInit {
       this.timer=this.temporaryMessInfo[0]['Осталось_до_конца_хода_в_сек'][0];
       this.role=this.temporaryMessInfo[3]['Ваша_Роль'][0];
     });
+
+  }
+
+  ngOnInit(): void {
+    this.getGameInfo();
   }
 }
