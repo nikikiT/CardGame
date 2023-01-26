@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CardsInHandsComponent} from "./dialogs/cards-in-hands/cards-in-hands.component";
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -24,11 +25,19 @@ export class GameComponent implements OnInit {
   currentMover:any;
   message: any;
 
-  constructor(private api: ApiService, private router: Router, public helper: HelperService, public dialog: MatDialog ) {
+  constructor(private api: ApiService, private router: Router, public helper: HelperService, public dialog: MatDialog ) {}
+
+  ngOnInit(): void {
+    this.getGameInfo()
+    let source = interval(3000)
+    this.subscription = source.subscribe(()=>this.getGameInfo())
   }
-  backToInfo(){
+  backToInfo() {
     this.router.navigate(['games-hub']).then(
-      ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL())
+      () => {
+        document.body.style.backgroundImage = this.helper.getImagePathByURL()
+        this.subscription?.unsubscribe()
+      });
   }
 
   pickCard(card: any){
@@ -48,7 +57,11 @@ export class GameComponent implements OnInit {
     })
   }
 
+  subscription: Subscription | null = null;
+
   getGameInfo(){
+    this.players = []
+    this.cardsInHands = []
     this.userToken = localStorage.getItem('userToken');
     this.currentRoomCode = localStorage.getItem('gameRoomChosen');
 
@@ -126,7 +139,5 @@ export class GameComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    this.getGameInfo();
-  }
+
 }
