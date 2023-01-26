@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiService} from "../../../services/api.service";
 import {Router} from "@angular/router";
 import {HelperService} from "../../../services/helper.service";
@@ -11,7 +11,7 @@ import { interval, Subscription } from 'rxjs';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   userToken: any;
   currentRoomCode: any;
@@ -32,11 +32,13 @@ export class GameComponent implements OnInit {
     let source = interval(3000)
     this.subscription = source.subscribe(()=>this.getGameInfo())
   }
+  ngOnDestroy(){
+    this.subscription?.unsubscribe();
+  }
   backToInfo() {
     this.router.navigate(['games-hub']).then(
       () => {
         document.body.style.backgroundImage = this.helper.getImagePathByURL()
-        this.subscription?.unsubscribe()
       });
   }
 
