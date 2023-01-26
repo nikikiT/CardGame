@@ -40,7 +40,6 @@
 
 .game-card-wrapper{
   display: flex;
-  width: 10%;
   float: bottom;
   justify-content: center;
   margin-top: 10%;

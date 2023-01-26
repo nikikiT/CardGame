@@ -1,6 +1,6 @@
 .card{
-  height:60%;
-  width:10%;
+  height: 420px;
+  width:300px;
   border: 1px solid black;
   box-shadow: darkgrey;
 }
@@ -9,12 +9,28 @@
   display: flex;
 }
 
+.player-card{
+  height: 120px;
+  width:80px;
+  border: gray solid 1px;
+  box-shadow: gray;
+}
+
 .player-container{
   display: flex;
 }
 
 it{
 
+}
+
+.main-game-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  margin: 2%;
+  box-sizing: border-box;
 }
 
 .player-card-current{

@@ -1,9 +1,13 @@
-<mat-card class="game-card-wrapper">
+<button id="create-room-button" mat-raised-button color="primary" (click)="backToInfo()">Выйти к комнатам</button>
+
+<mat-card class="game-card-wrapper main-game-card flex" >
+
 <div class="timer">
-  <header class="card-header">Осталось времени для хода: </header>
+  <header class="card-header">До конца хода: </header>
   {{this.timer}}
 </div>
 <br>
+
 <div class="player-role-wrapper">
   <header class="card-header">Ваша роль: </header>
   {{this.role}}
@@ -12,23 +16,31 @@
 
 
 
-<div class="card-container">
-  <mat-card [class.it]="cardInHand.title=='Нечто'" class="card" [style.background-image]="cardInHand.cardImg"  *ngFor="let cardInHand of cardsInHands">
-    <mat-card-header class="card-header">{{cardInHand.cardTitle}}</mat-card-header>
-    <mat-label >{{cardInHand.cardDescription}}</mat-label>
-    <mat-label >{{cardInHand.cardNumber}}</mat-label>
-  </mat-card>
-</div>
-
-
 <br>
 <div class="player-container">
-  <mat-card [class.player-card-current]="player.login==currentMover" class="card" *ngFor="let player of players">
+  <mat-card [class.player-card-current]="player.login==currentMover" class="player-card" *ngFor="let player of players">
     <mat-card-header>{{player.orderNumber}}</mat-card-header>
     <mat-label >{{player.login}}</mat-label>
     <mat-label >{{player.id}}</mat-label>
   </mat-card>
 </div>
 <br>
+
+<div class="card-container">
+  <mat-card [class.it]="cardInHand.title=='Нечто'" class="card" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}}" *ngFor="let cardInHand of cardsInHands">
+  </mat-card>
+</div>
+
+
+<mat-card>
+  <mat-card-header>Выберите действие</mat-card-header>
+<!--  <button mat-raised-button (click)="joinRoom(this.element.roomNumber,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Сыграть</button>-->
+<!--  <button mat-raised-button (click)="joinRoom(this.element.roomNumber,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Обменять</button>-->
+<!--  <button mat-raised-button (click)="joinRoom(this.element.roomNumber,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Сбросить</button>-->
+
+<!--  <button mat-raised-button (click)="joinRoom(this.element.roomNumber,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Принять эффект</button>-->
+<!--  <button mat-raised-button  color="primary">Зайти</button>-->
+
+</mat-card>
 
 

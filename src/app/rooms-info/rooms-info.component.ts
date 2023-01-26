@@ -127,7 +127,6 @@ export class RoomsInfoComponent implements OnInit{
 
   manageResponse(){
     this.userToken = JSON.parse(localStorage.getItem('userToken') || '');
-    console.log(this.userToken);
     this.api.updateInfo(this.userToken).subscribe(v =>{
       if (v.RESULTS[0].rus_error) {
         this.errorMsg = v.RESULTS[0].rus_error[0]
@@ -204,7 +203,6 @@ export class RoomsInfoComponent implements OnInit{
       let startedRoomsInfo: any = {}
       startedRoomsInfo.roomNumber = data;
       newStarted.push(startedRoomsInfo);
-      console.log(newStarted)
     });
 
     this.roomsDataSource = newRooms;

@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit{
           this.errorMsg = null;
           localStorage.setItem('userToken',JSON.stringify(v.RESULTS[0]['Ваш_токен'][0]));
           this.messOfInfoResponse=v.RESULTS;
-          console.log(v.RESULTS);
           localStorage.setItem('messOfInfoResponse',JSON.stringify(v.RESULTS));
           this.userToken=v.RESULTS[0]['Ваш_токен'][0];
           this.router.navigate(['games-hub']).then(

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../../services/api.service";
 import {Router} from "@angular/router";
+import {HelperService} from "../../../services/helper.service";
 
 @Component({
   selector: 'app-game',
@@ -15,7 +16,7 @@ export class GameComponent implements OnInit {
   dataSource: any[] = [];
   rout: any;
 
-  constructor(private api: ApiService, private router: Router) {
+  constructor(private api: ApiService, private router: Router, public helper: HelperService ) {
   }
 
   cardsInHands: any[] = [];
@@ -23,6 +24,11 @@ export class GameComponent implements OnInit {
   timer: any;
   role:any;
   currentMover:any;
+
+  backToInfo(){
+    this.router.navigate(['games-hub']).then(
+      ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL())
+  }
 
   ngOnInit(): void {
     this.userToken = localStorage.getItem('userToken');
@@ -81,8 +87,6 @@ export class GameComponent implements OnInit {
         cardInf.cardDescription = cards['Описание_ваших_карт'][index];
         cardInf.cardTitle = cards['Названия_ваших_карт'][index];
         this.cardsInHands.push(cardInf);
-        console.log(this.cardsInHands);
-        console.log(cards);
       });
 
       let players = this.temporaryMessInfo[2];
@@ -99,9 +103,6 @@ export class GameComponent implements OnInit {
 
       this.timer=this.temporaryMessInfo[0]['Осталось_до_конца_хода_в_сек'][0];
       this.role=this.temporaryMessInfo[3]['Ваша_Роль'][0];
-      console.log(this.currentMover);
-
-
     });
   }
 }
