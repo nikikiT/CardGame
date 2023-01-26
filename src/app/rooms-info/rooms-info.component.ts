@@ -109,7 +109,10 @@ export class RoomsInfoComponent implements OnInit{
   }
 
   startGame(roomNumber: any){
-    const dialogStartGameRef = this.dialog.open(StartGameComponent,{}).afterClosed()
+    let data = {
+      roomNumber: roomNumber
+    }
+    const dialogStartGameRef = this.dialog.open(StartGameComponent,{data:data}).afterClosed()
       .subscribe( v =>{
         if (v)
           this.getRoomsInfo();
