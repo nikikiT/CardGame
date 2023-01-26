@@ -42,8 +42,19 @@ export class CardsInHandsComponent implements OnInit{
 
   }
 
+  toDrop(){ //Выполнить сброс карты с руки
 
-  toPlay() {
+  }
+
+  toChange(){ //Выполнить обмен картами которые есть в руках
+
+  }
+
+  toDefend(){ //Защититься от эффекта противника
+
+  }
+
+  toPlay() { //Выполнить розыгрыш карт в руке
 
 
 

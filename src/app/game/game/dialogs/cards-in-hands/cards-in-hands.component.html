@@ -2,7 +2,7 @@
 <div mat-dialog-content class="buttons-container">
 
 
-    <button (click)="openAdditionalMenu=!openAdditionalMenu" mat-raised-button color="primary">Сыграть</button>
+    <button (click)="openAdditionalMenu=!openAdditionalMenu" mat-raised-button *ngIf="card.cardType!='Защита' && card.cardType!='Инфекция'" color="primary">Сыграть</button>
 
   <p *ngIf="openAdditionalMenu" class="buttons-container">
 
@@ -20,20 +20,20 @@
       </mat-select>
     </mat-form-field>
 
-    <button (click)="toPlay()" mat-raised-button color="primary">Разыграть</button>
+    <button (click)="toPlay()" *ngIf="card.cardType!='Защита' && card.cardType!='Инфекция'" mat-raised-button color="primary">Разыграть</button>
 
   </p>
 
 
-    <button mat-raised-button color="primary">Сброс</button>
+    <button mat-raised-button (click)="toDrop()" *ngIf="card.cardTitle!='Нечто'" color="primary">Сброс</button>
 
 
 
-    <button mat-raised-button color="primary">Обмен</button>
+    <button mat-raised-button (click)="toChange()" *ngIf="card.cardTitle!='Нечто'" color="primary">Обмен</button>
 
 
 
-    <button *ngIf="card.cardType=='Защита'" mat-raised-button color="primary">Защита</button>
+    <button *ngIf="card.cardType=='Защита' && card.cardTitle!='Нечто'" mat-raised-button (click)="toDefend()"  color="primary">Защита</button>
 
 
 </div>
