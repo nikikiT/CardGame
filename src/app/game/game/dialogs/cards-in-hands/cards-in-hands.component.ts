@@ -18,6 +18,8 @@ export class CardsInHandsComponent implements OnInit{
   chooseTarget = false;
   chooseCard = false;
 
+  currentRoomNumber: any;
+  userToken: any;
   openAdditionalMenu = false
   selectedTarget: string = '';
   selectedCard: number = 0;
@@ -36,6 +38,7 @@ export class CardsInHandsComponent implements OnInit{
     this.chooseCard = data.chooseCard
     this.chooseTarget = data.chooseTarget
     this.card = data.card
+    this.userToken=localStorage.getItem('userToken');
   }
 
   ngOnInit(): void {
@@ -43,7 +46,7 @@ export class CardsInHandsComponent implements OnInit{
   }
 
   toDrop(){ //Выполнить сброс карты с руки
-
+    this.api.dropCard(this.userToken,'',this.card.id)
   }
 
   toChange(){ //Выполнить обмен картами которые есть в руках
@@ -51,7 +54,7 @@ export class CardsInHandsComponent implements OnInit{
   }
 
   toDefend(){ //Защититься от эффекта противника
-
+    console.log(this.card)
   }
 
   toPlay() { //Выполнить розыгрыш карт в руке
