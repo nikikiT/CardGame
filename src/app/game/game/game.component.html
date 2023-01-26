@@ -1,12 +1,25 @@
+<mat-card class="game-card-wrapper">
 <div class="timer">
-  <header>Осталось времени для хода: </header>
+  <header class="card-header">Осталось времени для хода: </header>
   {{this.timer}}
 </div>
 <br>
 <div class="player-role-wrapper">
-  <header>Ваша роль: </header>
+  <header class="card-header">Ваша роль: </header>
   {{this.role}}
 </div>
+</mat-card>
+
+
+
+<div class="card-container">
+  <mat-card [class.it]="cardInHand.title=='Нечто'" class="card" [style.background-image]="cardInHand.cardImg"  *ngFor="let cardInHand of cardsInHands">
+    <mat-card-header class="card-header">{{cardInHand.cardTitle}}</mat-card-header>
+    <mat-label >{{cardInHand.cardDescription}}</mat-label>
+    <mat-label >{{cardInHand.cardNumber}}</mat-label>
+  </mat-card>
+</div>
+
 
 <br>
 <div class="player-container">
@@ -17,16 +30,5 @@
   </mat-card>
 </div>
 <br>
-
-<mat-card>
-<div class="card-container">
-  <mat-card [class.it]="cardInHand.title=='Нечто'" class="card" *ngFor="let cardInHand of cardsInHands">
-    <mat-card-header>{{cardInHand.cardTitle}}</mat-card-header>
-    <mat-label >{{cardInHand.cardDescription}}</mat-label>
-    <mat-label >{{cardInHand.cardNumber}}</mat-label>
-  </mat-card>
-</div>
-</mat-card>
-
 
 
