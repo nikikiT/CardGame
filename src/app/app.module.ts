@@ -22,6 +22,8 @@ import { CreateRoomComponent } from './rooms-info/dialogs/create-room/create-roo
 import {MatSliderModule} from "@angular/material/slider";
 import {HelperService} from "../services/helper.service";
 import { StartGameComponent } from './rooms-info/dialogs/start-game/start-game.component';
+import { CardsInHandsComponent } from './game/game/dialogs/cards-in-hands/cards-in-hands.component';
+import { EffectComponent } from './game/game/dialogs/effect/effect.component';
 
 
 const appRoutes: Routes = [
@@ -66,7 +68,9 @@ const appRoutes: Routes = [
     JoinGameComponent,
     JoinRoomComponent,
     CreateRoomComponent,
-    StartGameComponent
+    StartGameComponent,
+    CardsInHandsComponent,
+    EffectComponent
   ],
     imports: [
         BrowserModule,
