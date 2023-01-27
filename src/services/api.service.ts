@@ -91,19 +91,19 @@ export class ApiService {
     return  this.http.post(this.URL,fd);
   }
 
-  changeCards(token: string, roomNumber: string, card: string){
+  changeCards(token: string, roomNumber: string, card: string): Observable<any>{
     let fd = new FormData();
     fd.append('pname','change_cards');
     fd.append('db','298479');
     fd.append('format','columns_compact');
     fd.append('p1',token);
-    fd.append('p2',card);
-    fd.append('p3',roomNumber);
+    fd.append('p2',roomNumber);
+    fd.append('p3',card);
 
     return  this.http.post(this.URL,fd);
   }
 
-  playCard(token: string, roomNumber: string, idCard: string, targetLogin: string, idCardAdditional: string){
+  playCard(token: string, roomNumber: string, idCard: string, targetLogin: string, idCardAdditional: string): Observable<any>{
     let fd = new FormData();
     fd.append('pname','play_card');
     fd.append('db','298479');
@@ -117,7 +117,7 @@ export class ApiService {
     return  this.http.post(this.URL,fd);
   }
 
-  dropCard(token: string, roomNumber: string, idCard: string){
+  dropCard(token: string, roomNumber: string, idCard: string): Observable<any>{
     let fd = new FormData();
     fd.append('pname','drop_card');
     fd.append('db','298479');
@@ -130,7 +130,7 @@ export class ApiService {
     return  this.http.post(this.URL,fd);
   }
 
-  defend(token: string, roomNumber: string, idCard: string){
+  defend(token: string, roomNumber: string, idCard: string): Observable<any>{
     let fd = new FormData();
     fd.append('pname','defend');
     fd.append('db','298479');
@@ -143,7 +143,7 @@ export class ApiService {
     return  this.http.post(this.URL,fd);
   }
 
-  passEffect(token: string, roomNumber: string, idCard: string){
+  passEffect(token: string, roomNumber: string, idCard: string): Observable<any>{
     let fd = new FormData();
     fd.append('pname','pass_e');
     fd.append('db','298479');
@@ -157,7 +157,7 @@ export class ApiService {
   }
 
   //Не обязательна
-  leaveRoom(token: string, roomNumber: string, password: string){
+  leaveRoom(token: string, roomNumber: string, password: string): Observable<any>{
     let fd = new FormData();
     fd.append('pname','leave_room');
     fd.append('db','298479');

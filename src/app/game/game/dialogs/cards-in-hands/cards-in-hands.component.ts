@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ApiService} from "../../../../../services/api.service";
 import {Router} from "@angular/router";
 import {HelperService} from "../../../../../services/helper.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 
 @Component({
@@ -24,12 +24,14 @@ export class CardsInHandsComponent implements OnInit{
   selectedTarget: string = '';
   selectedCard: number = 0;
   card: any = {};
+  error_msg: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private api: ApiService,
     private router: Router,
-    public helper: HelperService
+    public helper: HelperService,
+    public dialogRef: MatDialogRef<CardsInHandsComponent>,
 
   ) {
     this.cardTitle=data.cardTitle;
@@ -39,6 +41,7 @@ export class CardsInHandsComponent implements OnInit{
     this.chooseTarget = data.chooseTarget
     this.card = data.card
     this.userToken=localStorage.getItem('userToken');
+    this.currentRoomNumber=localStorage.getItem('gameRoomChosen');
   }
 
   ngOnInit(): void {
@@ -46,20 +49,76 @@ export class CardsInHandsComponent implements OnInit{
   }
 
   toDrop(){ //Выполнить сброс карты с руки
-    this.api.dropCard(this.userToken,'',this.card.id)
+    this.api.dropCard(this.userToken,this.currentRoomNumber,this.card.cardNumber).subscribe( v => {
+      if (v.RESULTS[0].err_msg) {
+        this.error_msg = v.RESULTS[0].err_msg[0];
+        alert(this.error_msg);
+        this.dialogRef.close();
+        return;
+      }
+
+
+    }, error => {
+      alert(error)
+    });
   }
 
   toChange(){ //Выполнить обмен картами которые есть в руках
+    console.log("Токен: "+this.userToken,"№ комн: "+this.currentRoomNumber,"ид карты: "+this.card.cardNumber)
+    this.api.changeCards(this.userToken,this.currentRoomNumber,this.card.cardNumber).subscribe(v=>{
 
+      if (v.RESULTS[0].err_msg) {
+        this.error_msg = v.RESULTS[0].err_msg[0];
+        alert(this.error_msg);
+        this.dialogRef.close();
+        return;
+      }
+
+
+    }, error => {
+      alert(error)
+    });
   }
 
   toDefend(){ //Защититься от эффекта противника
-    console.log(this.card)
+    this.api.defend(this.userToken,this.currentRoomNumber,this.card.cardNumber).subscribe(v=>{
+      if (v.RESULTS[0].err_msg) {
+        this.error_msg = v.RESULTS[0].err_msg[0];
+        alert(this.error_msg);
+        this.dialogRef.close();
+        return;
+      }
+
+
+    }, error => {
+      alert(error)
+    })
   }
 
+  //TODO Упорство возвращает 3 карты на выбор и из них нужно выбрать одну одну
+  //TODO Подозрение возвращает 1 карту (подсмотреть) и больше ничего с ней не делает
   toPlay() { //Выполнить розыгрыш карт в руке
+    console.log("Токен: "+this.userToken,"№ комн: "+this.currentRoomNumber,"ид карты: "+this.card.cardNumber, "логин цели: "+this.selectedTarget,"доп. карта: "+this.selectedCard.toString())
+    this.api.playCard(this.userToken,this.currentRoomNumber,this.card.cardNumber,this.selectedTarget,this.selectedCard.toString()).subscribe(v=>{
+      if (v.RESULTS[0].err_msg) {
+        this.error_msg = v.RESULTS[0].err_msg[0];
+        alert(this.error_msg);
+        this.dialogRef.close();
+        return;
+      }
 
+      if (v.RESULTS[0].Suspend){
+        console.log(v.RESULTS[1]['title'][0]);
+        console.log(v.RESULTS[1]['description'][0]);
+      }
 
+      if(v.RESULTS[0].Persist){
+        alert(v.RESULTS[0].Persist[0])
+      }
+
+    }, error => {
+      alert(error)
+    })
 
     this.openAdditionalMenu=false
   }

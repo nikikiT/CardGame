@@ -16,7 +16,7 @@
     <mat-form-field *ngIf="chooseCard" >
       <mat-label>Выбор игрока</mat-label>
       <mat-select [(ngModel)]="selectedCard">
-        <mat-option [value]="card.id" *ngFor="let card of cardsInHands">{{card.cardTitle}}</mat-option>
+        <mat-option [value]="card.cardNumber" *ngFor="let card of cardsInHands">{{card.cardTitle}}</mat-option>
       </mat-select>
     </mat-form-field>
 

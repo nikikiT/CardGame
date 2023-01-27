@@ -24,6 +24,7 @@ export class GameComponent implements OnInit, OnDestroy {
   role:any;
   currentMover:any;
   message: any;
+  subscription: Subscription | null = null;
 
   constructor(private api: ApiService, private router: Router, public helper: HelperService, public dialog: MatDialog ) {}
 
@@ -59,8 +60,10 @@ export class GameComponent implements OnInit, OnDestroy {
     })
   }
 
-  subscription: Subscription | null = null;
-
+  //TODO Показать карты сыгранные на вас: (v.RESULTS[5][парам.][]), где парам.="Номер_карты_сыгранной_на_вас_карты" или "Название_сыгранной_на_вас_карты" или "Описание_сыгранной_на_вас_карты"
+  //TODO Если в эффектах () приходят карты разыгравшего Виски то нужно показывать эти карты
+  //TODO Если выставили дверь (v.RESULTS[7]['Заколоченные_двери'][index]) нужно просто их показать без варианта что-либо сделать
+  //TODO Виски (v.RESULTS[8][])
   getGameInfo(){
     this.players = []
     this.cardsInHands = []
@@ -114,6 +117,8 @@ export class GameComponent implements OnInit, OnDestroy {
           case 'Соблазн' : cardInf.cardImg="url('assets/Cards/61_seduce.png')"
             break;
           case 'Никакого шашлыка!' : cardInf.cardImg="url('assets/Cards/81_not_burning.png')"
+            break;
+          case 'Сматывай удочки!' : cardInf.cardImg="url('assets/Cards/55_reel_fishing_rods.png')"
             break;
         }
         cardInf.cardNumber = data;
