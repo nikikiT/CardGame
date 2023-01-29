@@ -57,7 +57,7 @@ export class CardsInHandsComponent implements OnInit{
         alert(this.error_msg);
         return;
       }
-
+      this.dialogRef.close();
 
     }, error => {
       alert(error)
@@ -73,8 +73,7 @@ export class CardsInHandsComponent implements OnInit{
         this.dialogRef.close();
         return;
       }
-
-        console.log(v.RESULTS)
+      this.dialogRef.close();
     }, error => {
       alert(error)
     });
@@ -88,13 +87,11 @@ export class CardsInHandsComponent implements OnInit{
         this.dialogRef.close();
         return;
       }
+      this.dialogRef.close();
     }, error => {
       alert(error)
     })
   }
-
-  //TODO Упорство возвращает 3 карты на выбор и из них нужно выбрать одну одну
-  //TODO Подозрение возвращает 1 карту (подсмотреть) и больше ничего с ней не делает
 
   toPlay() { //Выполнить розыгрыш карт в руке
     console.log("Токен: "+this.userToken,"№ комн: "+this.currentRoomNumber,"ид карты: "+this.card.cardNumber, "логин цели: "+this.selectedTarget,"доп. карта: "+this.selectedCard.toString())
@@ -123,12 +120,9 @@ export class CardsInHandsComponent implements OnInit{
           this.persistenceCards.push(cardInfo)
         })
       }
-
-
     }, error => {
       alert(error)
     })
-
     this.openAdditionalMenu=false
   }
 

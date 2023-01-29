@@ -77,9 +77,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   getGameInfo(){
-
-    // this.players = [];
-    //this.cardsInHands = [];
     this.userToken = localStorage.getItem('userToken');
     this.currentRoomCode = localStorage.getItem('gameRoomChosen');
     this.lockedDoor='';
@@ -131,6 +128,7 @@ export class GameComponent implements OnInit, OnDestroy {
           whisCardInf.cardName = data
           whisCardInf.cardImg = this.helper.getImageOfCard(whiskeyCards['Названия_карт_сыгравшего_виски'][index])
           this.whiskeyCards.push(whisCardInf);
+          console.log(this.whiskeyCards)
         })
       }
       let players = this.temporaryMessInfo[2];
