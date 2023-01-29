@@ -95,6 +95,8 @@ export class CardsInHandsComponent implements OnInit{
   //TODO Упорство возвращает 3 карты на выбор и из них нужно выбрать одну одну
   //TODO Подозрение возвращает 1 карту (подсмотреть) и больше ничего с ней не делает
   toPlay() { //Выполнить розыгрыш карт в руке
+    if (this.chooseCard && !this.selectedCard ||this.chooseTarget && !this.selectedTarget)
+      return;
     console.log("Токен: "+this.userToken,"№ комн: "+this.currentRoomNumber,"ид карты: "+this.card.cardNumber, "логин цели: "+this.selectedTarget,"доп. карта: "+this.selectedCard.toString())
     this.api.playCard(this.userToken,this.currentRoomNumber,this.card.cardNumber,this.selectedTarget,this.selectedCard.toString()).subscribe(v=>{
       if (v.RESULTS[0].err_msg) {
