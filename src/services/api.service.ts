@@ -156,6 +156,19 @@ export class ApiService {
     return  this.http.post(this.URL,fd);
   }
 
+  getCard(token: string, roomNumber: string, idCard: string): Observable<any>{
+    let fd = new FormData();
+    fd.append('pname','get_card');
+    fd.append('db','298479');
+    fd.append('format','columns_compact');
+    fd.append('p1',token);
+    fd.append('p2',roomNumber);
+    fd.append('p3',idCard); //Null в большинстве случаев кроме одной специальной карты (Соблазн)
+
+
+    return  this.http.post(this.URL,fd);
+  }
+
   //Не обязательна
   leaveRoom(token: string, roomNumber: string, password: string): Observable<any>{
     let fd = new FormData();

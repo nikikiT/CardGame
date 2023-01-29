@@ -52,8 +52,8 @@ export class CardsInHandsComponent implements OnInit{
     this.api.dropCard(this.userToken,this.currentRoomNumber,this.card.cardNumber).subscribe( v => {
       if (v.RESULTS[0].err_msg) {
         this.error_msg = v.RESULTS[0].err_msg[0];
-        alert(this.error_msg);
         this.dialogRef.close();
+        alert(this.error_msg);
         return;
       }
 
@@ -66,7 +66,6 @@ export class CardsInHandsComponent implements OnInit{
   toChange(){ //Выполнить обмен картами которые есть в руках
     console.log("Токен: "+this.userToken,"№ комн: "+this.currentRoomNumber,"ид карты: "+this.card.cardNumber)
     this.api.changeCards(this.userToken,this.currentRoomNumber,this.card.cardNumber).subscribe(v=>{
-
       if (v.RESULTS[0].err_msg) {
         this.error_msg = v.RESULTS[0].err_msg[0];
         alert(this.error_msg);
@@ -74,7 +73,7 @@ export class CardsInHandsComponent implements OnInit{
         return;
       }
 
-
+        console.log(v.RESULTS)
     }, error => {
       alert(error)
     });
@@ -88,8 +87,6 @@ export class CardsInHandsComponent implements OnInit{
         this.dialogRef.close();
         return;
       }
-
-
     }, error => {
       alert(error)
     })
@@ -110,11 +107,14 @@ export class CardsInHandsComponent implements OnInit{
       if (v.RESULTS[0].Suspend){
         console.log(v.RESULTS[1]['title'][0]);
         console.log(v.RESULTS[1]['description'][0]);
+        alert(v.RESULTS[0])
       }
 
       if(v.RESULTS[0].Persist){
         alert(v.RESULTS[0].Persist[0])
+        this.dialogRef.close(v.RESULTS[0].Persist[0])
       }
+
 
     }, error => {
       alert(error)

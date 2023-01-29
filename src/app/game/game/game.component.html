@@ -1,29 +1,53 @@
 <div class="buttons-container flex right-panel"><button id="create-room-button" mat-raised-button color="primary" (click)="backToInfo()">Выйти к комнатам</button>
 
-  <button class="apply-effect" mat-raised-button color="primary" (click)="backToInfo()">Применить эффект</button></div>
+  <button class="apply-effect" mat-raised-button color="primary" (click)="applyEffect()">Применить эффект</button></div>
 
 
-<mat-card class=" main-game-card flex" >
+<mat-card class=" main-game-card" >
+<div class="flex">
+  <div class="timer">
+    <header class="card-header">До конца хода </header>
+<!--    {{trunc(this.timer / 3600)}}:{{trunc(this.timer / 60  % 60)}}:{{trunc(this.timer / 60 / 60 % 60)}}-->
+    {{timer}}
+  </div>
 
-<div class="timer">
-  <header class="card-header">До конца хода: </header>
-  {{this.timer}}
+  <div class="player-role-wrapper">
+    <header class="card-header">Ваша роль </header>
+    {{this.role}}
+  </div>
 </div>
 
-<div class="player-role-wrapper">
-  <header class="card-header">Ваша роль: </header>
-  {{this.role}}
-</div>
+  <div class="message">
+    <h3 class="card-header">Последнее действие </h3>
+    <span>{{this.message}}</span>
+  </div>
 </mat-card>
 
-<div class="message">
-  <h3 class="card-header">Последнее действие: </h3>
-  {{this.message}}
+<div class="flex for-effect-card">
+  <div>
+    <h3 style="color:white;" *ngIf="getImageOfCard(this.effectOnMe)!=''">Сыгранная на вас карта</h3>
+    <mat-card class="effect-card" *ngIf="getImageOfCard(this.effectOnMe)!=''" [style.background-image]="getImageOfCard(this.effectOnMe)" title="{{this.effectOnMe}}" >
+    </mat-card>
+  </div>
+
+  <mat-card class="closed-doors-info" *ngIf="lockedDoor!=''">
+    <h3 style="color:white;">Заколоченные двери</h3>
+    справа от {{this.lockedDoorLogin}}
+  </mat-card>
 </div>
+<div *ngIf="cardsPersist.length">
+    <mat-form-field>
+      <mat-select [(ngModel)]="selectedCard">
+        <mat-option [value]="card['Номер карты']" *ngFor="let card of cardsPersist"> {{card['Название']}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  <button mat-raised-button color="primary" (click)="getCard()">Выбрать карту</button>
+  </div>
+<!--  <div class="card-container">-->
+<!--    <mat-card class="card" [style.background-image]="whiskeyCard.cardImg" title="{{whiskeyCard.cardTitle}}" *ngFor="let whiskeyCard of whiskeyCards">-->
+<!--    </mat-card>-->
+<!--  </div>-->
 
-
-
-<br>
 <div class="player-container">
   <mat-card [class.player-card-current]="player.login==currentMover" title="{{player.id}}" class="player-card" *ngFor="let player of players">
     <mat-card-header>{{player.orderNumber}}</mat-card-header>
@@ -35,7 +59,6 @@
 <div class="card-container">
   <mat-card [class.it]="cardInHand.cardTitle=='Нечто'" class="card"  (click)="pickCard(cardInHand)" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}}" *ngFor="let cardInHand of cardsInHands">
   </mat-card>
-
 </div>
 
 

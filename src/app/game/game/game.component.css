@@ -3,6 +3,7 @@
   width:300px;
   border: 1px solid black;
   box-shadow: darkgrey;
+  background-size: 300px;
 }
 
 .card-container{
@@ -27,13 +28,21 @@ it{
 
 }
 
+.effect-card{
+  background-size: 215px;
+  height: 300px;
+  width: 215px;
+}
+
 .main-game-card{
-  justify-content: space-around;
   text-align: center;
   width: 20%;
   box-sizing: border-box;
   padding: 10px;
   margin: auto;
+}
+.main-game-card > div.flex {
+  justify-content: space-around;
 }
 
 .player-card-current{
@@ -44,11 +53,17 @@ it{
 
 }
 
-.message{
-  text-align: center;
-  color: white;
-}
 
 .apply-effect{
 
+}
+
+
+.closed-doors-info{
+  color: white;
+  background-color: transparent;
+}
+
+.for-effect-card>*{
+  margin: 15px;
 }
