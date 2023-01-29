@@ -14,6 +14,7 @@ import { interval, Subscription } from 'rxjs';
 export class GameComponent implements OnInit, OnDestroy {
 
   userToken: any;
+  userLogin: any;
   currentRoomCode: any;
   temporaryMessInfo: any;
   dataSource: any[] = [];
@@ -62,7 +63,7 @@ export class GameComponent implements OnInit, OnDestroy {
       cardTitle: card.cardTitle,
       cardsInHands: this.cardsInHands.filter(c=>c.id!=card.id),
       players: this.players.filter(p=>p.login!=localStorage.getItem('myLogin')),
-      chooseTarget: ['Огнемет','Топор','Подозрение','Меняемся местами!','Сматывай уточки!', 'Соблазн','Заколоченная дверь'].includes(card.cardTitle),
+      chooseTarget: ['Огнемет','Топор','Подозрение','Меняемся местами!','Сматывай удочки!', 'Соблазн','Заколоченная дверь'].includes(card.cardTitle),
       chooseCard: ['Соблазн','Свидание вслепую'].includes(card.cardTitle),
       card: card
     }
@@ -77,13 +78,13 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   getGameInfo(){
-    this.effectOnMe= {};
+
     // this.players = [];
     //this.cardsInHands = [];
     this.userToken = localStorage.getItem('userToken');
     this.currentRoomCode = localStorage.getItem('gameRoomChosen');
     this.lockedDoor='';
-
+    this.userLogin=localStorage.getItem('myLogin');
     this.rout = 'game-table';
     localStorage.setItem('rout', '');
 
@@ -96,7 +97,10 @@ export class GameComponent implements OnInit, OnDestroy {
         this.message=v.RESULTS[1]['update_message'][0]
       }
 
-      this.lockedDoor = this.temporaryMessInfo[7]['Заколоченные_двери'][0];
+      if (this.temporaryMessInfo[7] && this.temporaryMessInfo[7]['Заколоченные_двери'] && this.temporaryMessInfo[7]['Заколоченные_двери'][0])
+          this.lockedDoor = this.temporaryMessInfo[7]['Заколоченные_двери'][0];
+      else
+        this.lockedDoor = ''
 
       let cards = this.temporaryMessInfo[4]
       let newCards: any[] = [];
@@ -161,7 +165,7 @@ export class GameComponent implements OnInit, OnDestroy {
       });
     }
       this.players.sort((a:any,b:any)=>a .orderNumber-b.orderNumber);
-
+      this.effectOnMe= {};
       this.effectOnMe = this.temporaryMessInfo[5]['Название_сыгранной_на_вас_карты'][0];
       this.timer=this.temporaryMessInfo[0]['Осталось_до_конца_хода_в_сек'][0];
       this.role=this.temporaryMessInfo[3]['Ваша_Роль'][0];

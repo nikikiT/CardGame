@@ -12,8 +12,8 @@
   </div>
 
   <div class="player-role-wrapper">
-    <header class="card-header">Ваша роль </header>
-    {{this.role}}
+    <header class="card-header">Ваши логин и роль </header>
+    {{this.userLogin}} - {{this.role}}
   </div>
 </div>
 
@@ -57,7 +57,7 @@
 <br>
 
 <div class="card-container">
-  <mat-card [class.it]="cardInHand.cardTitle=='Нечто'" class="card"  (click)="pickCard(cardInHand)" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}}" *ngFor="let cardInHand of cardsInHands">
+  <mat-card class="card"  (click)="pickCard(cardInHand)" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}}" *ngFor="let cardInHand of cardsInHands">
   </mat-card>
 </div>
 
