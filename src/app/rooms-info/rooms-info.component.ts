@@ -20,7 +20,7 @@ export class RoomsInfoComponent implements OnInit{
 
   userToken: any;
   temporaryForMessInfo: any;
-
+  userLogin: any;
   roomToEnterFC = new FormControl('',[Validators.required]);
   roomToEnterPassFc = new FormControl('',[Validators.required]);
 
@@ -147,6 +147,7 @@ export class RoomsInfoComponent implements OnInit{
   ngOnInit() {
     this.manageResponse();
     this.getRoomsInfo();
+    this.userLogin=localStorage.getItem('myLogin')
   }
 
   goBackToLogin(){
@@ -210,9 +211,14 @@ export class RoomsInfoComponent implements OnInit{
     this.playersOnlineDataSource = newPlayersOnline;
     this.playersInRoomDataSource = newPlayersInRooms;
     this.startedRoomsDataSource = newStarted;
+    console.log(this.playerRoomsDataSource);
   }
 
   isGameStarted(room:any){
     return !this.startedRoomsDataSource.some(p=>p.roomNumber==room.roomNumber)
+  }
+
+  hasntJoined(element: any) {
+    return !this.playerRoomsDataSource.some(pr => pr.roomNumber==element.roomNumber);
   }
 }

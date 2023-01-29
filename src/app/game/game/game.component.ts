@@ -71,21 +71,21 @@ export class GameComponent implements OnInit, OnDestroy {
       if(v){
         this.getGameInfo();
         if (v.length)
-          this.cardsPersist = v
+          this.cardsPersist = v;
       }
     })
   }
 
   getGameInfo(){
     this.effectOnMe= {};
-    this.players = []
-    this.cardsInHands = []
+    // this.players = [];
+    //this.cardsInHands = [];
     this.userToken = localStorage.getItem('userToken');
     this.currentRoomCode = localStorage.getItem('gameRoomChosen');
     this.lockedDoor='';
 
     this.rout = 'game-table';
-    localStorage.setItem('rout', '')
+    localStorage.setItem('rout', '');
 
     this.api.updateGame(this.userToken, this.currentRoomCode).subscribe(v => {
       this.temporaryMessInfo = v.RESULTS;
@@ -99,6 +99,8 @@ export class GameComponent implements OnInit, OnDestroy {
       this.lockedDoor = this.temporaryMessInfo[7]['Заколоченные_двери'][0];
 
       let cards = this.temporaryMessInfo[4]
+      let newCards: any[] = [];
+
       cards['Номер_ваших_карт'].forEach((data: any, index: any) => {
         let cardInf: any = {};
         cardInf.cardImg=this.getImageOfCard(cards['Названия_ваших_карт'][index]);
@@ -107,8 +109,17 @@ export class GameComponent implements OnInit, OnDestroy {
         cardInf.cardDescription = cards['Описание_ваших_карт'][index];
         cardInf.cardTitle = cards['Названия_ваших_карт'][index];
         cardInf.cardType = cards['Тип карты'][index];
-        this.cardsInHands.push(cardInf);
+        newCards.push(cardInf);
+        if(!this.cardsInHands.some(cih => cih.cardNumber==cardInf.cardNumber))
+          this.cardsInHands.push(cardInf);
       });
+      let cardsInHandsCopy: any[] = this.cardsInHands.slice();
+
+      cardsInHandsCopy.forEach((card:any, index:number) =>{
+        if (!newCards.some(c => c.cardNumber==card.cardNumber))
+            this.cardsInHands.splice(index,1);
+      })
+
 
       let whiskeyCards= this.temporaryMessInfo[8]['Названия_карт_сыгравшего_виски'];
       if(whiskeyCards!=undefined){
@@ -119,23 +130,37 @@ export class GameComponent implements OnInit, OnDestroy {
           this.whiskeyCards.push(whisCardInf);
         })
       }
-
       let players = this.temporaryMessInfo[2];
+    if (!this.players.length) {
       players['Номер_в_порядке_хода'].forEach((data: any, index: any) => {
         let playerInf: any = {};
         playerInf.orderNumber = data;
         playerInf.login = players['Логин'][index];
         playerInf.id = players['Номер_игрока'][index];
 
-        if (playerInf.id==this.lockedDoor)
-          this.lockedDoorLogin=playerInf.login
+        if (playerInf.id == this.lockedDoor)
+          this.lockedDoorLogin = playerInf.login
 
 
-        if(players['Чей_ход'][index]){
-          this.currentMover=players['Логин'][index];
+        if (players['Чей_ход'][index]) {
+          this.currentMover = players['Логин'][index];
         }
         this.players.push(playerInf);
       });
+    } else{
+        players['Логин'].forEach((data: any, index: any) => {
+          let player = this.players.find(p=>p.login==data)
+          if (!player) return;
+          player.orderNumber = players['Номер_в_порядке_хода'][index];
+
+        if (players['Номер_игрока'][index] == this.lockedDoor)
+            this.lockedDoorLogin = data
+        if (players['Чей_ход'][index]) {
+          this.currentMover = data;
+        }
+      });
+    }
+      this.players.sort((a:any,b:any)=>a .orderNumber-b.orderNumber);
 
       this.effectOnMe = this.temporaryMessInfo[5]['Название_сыгранной_на_вас_карты'][0];
       this.timer=this.temporaryMessInfo[0]['Осталось_до_конца_хода_в_сек'][0];
@@ -167,6 +192,10 @@ export class GameComponent implements OnInit, OnDestroy {
       case 'Сматывай удочки!' : return "url('assets/Cards/55_reel_fishing_rods.png')"
     }
     return '';
+  }
+
+  pushNewElements(){
+
   }
 
   trunc(number: number) {

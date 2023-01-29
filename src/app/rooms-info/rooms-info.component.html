@@ -33,13 +33,13 @@
   <ng-container matColumnDef="buttonsToStartGame">
     <th mat-header-cell *matHeaderCellDef>Начать игру</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button (click)="startGame(this.element.roomNumber)" *ngIf="isGameStarted(element) && this.element.playersInRoom>3 " color="primary">Начать</button>
+      <button mat-raised-button (click)="startGame(this.element.roomNumber)" *ngIf="isGameStarted(element) && this.element.playersInRoom==4 && this.element.adminLogin==this.userLogin" color="primary">Начать</button>
   </ng-container>
 
   <ng-container matColumnDef="buttonToJoin">
     <th mat-header-cell *matHeaderCellDef>Войти в комнату</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button (click)="joinRoom(this.element.roomNumber,this.element.passwordFromRoom)" id="joinRoomButton" color="primary">Зайти</button>
+      <button mat-raised-button (click)="joinRoom(this.element.roomNumber,this.element.passwordFromRoom)" *ngIf="hasntJoined(element) && this.element.adminLogin!=this.userLogin && this.element.playersInRoom<4" id="joinRoomButton" color="primary">Зайти</button>
     </td>
 
   </ng-container>

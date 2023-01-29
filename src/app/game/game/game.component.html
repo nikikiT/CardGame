@@ -24,13 +24,13 @@
 </mat-card>
 
 <div class="flex for-effect-card">
-  <div>
-    <h3 style="color:white;" *ngIf="getImageOfCard(this.effectOnMe)!=''">Сыгранная на вас карта</h3>
-    <mat-card class="effect-card" *ngIf="getImageOfCard(this.effectOnMe)!=''" [style.background-image]="getImageOfCard(this.effectOnMe)" title="{{this.effectOnMe}}" >
+  <div [hidden]="getImageOfCard(this.effectOnMe)==''">
+    <h3 style="color:white;" >Сыгранная на вас карта</h3>
+    <mat-card class="effect-card" [style.background-image]="getImageOfCard(this.effectOnMe)" title="{{this.effectOnMe}}" >
     </mat-card>
   </div>
 
-  <mat-card class="closed-doors-info" *ngIf="lockedDoor!=''">
+  <mat-card class="closed-doors-info" [hidden]="lockedDoor==''">
     <h3 style="color:white;">Заколоченные двери</h3>
     справа от {{this.lockedDoorLogin}}
   </mat-card>
