@@ -48,20 +48,20 @@ export class GameComponent implements OnInit, OnDestroy {
   backToInfo() {
     this.router.navigate(['games-hub']).then(
       () => {
+        this.subscription?.unsubscribe()
         document.body.style.backgroundImage = this.helper.getImagePathByURL()
       });
   }
 
   applyEffect(){
     this.api.passEffect(this.userToken,this.currentRoomCode,this.effectOnMe.id).subscribe(value => {
-
     })
   }
 
   pickCard(card: any){
     let data = {
       cardTitle: card.cardTitle,
-      cardsInHands: this.cardsInHands.filter(c=>c.id!=card.id),
+      cardsInHands: this.cardsInHands.filter(c=>c.cardNumber!=card.cardNumber),
       players: this.players.filter(p=>p.login!=localStorage.getItem('myLogin')),
       chooseTarget: ['Огнемет','Топор','Подозрение','Меняемся местами!','Сматывай удочки!', 'Соблазн','Заколоченная дверь'].includes(card.cardTitle),
       chooseCard: ['Соблазн','Свидание вслепую'].includes(card.cardTitle),
@@ -164,8 +164,11 @@ export class GameComponent implements OnInit, OnDestroy {
       });
     }
       this.players.sort((a:any,b:any)=>a .orderNumber-b.orderNumber);
-      this.effectOnMe= {};
-      this.effectOnMe = this.temporaryMessInfo[5]['Название_сыгранной_на_вас_карты'][0];
+      this.effectOnMe= {
+        title: this.temporaryMessInfo[5]['Название_сыгранной_на_вас_карты'][0],
+        id: this.temporaryMessInfo[5]['Номер_сыгранной_на_вас_карты'][0]
+      };
+
       this.timer=this.temporaryMessInfo[0]['Осталось_до_конца_хода_в_сек'][0];
       this.role=this.temporaryMessInfo[3]['Ваша_Роль'][0];
     });

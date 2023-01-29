@@ -23,9 +23,9 @@
 </mat-card>
 
 <div class="flex for-effect-card">
-  <div [hidden]="helper.getImageOfCard(this.effectOnMe)==''">
+  <div [hidden]="helper.getImageOfCard(this.effectOnMe.title)==''">
     <h3 style="color:white;" >Сыгранная на вас карта</h3>
-    <mat-card class="effect-card" [style.background-image]="helper.getImageOfCard(this.effectOnMe)" title="{{this.effectOnMe}}" >
+    <mat-card class="effect-card" [style.background-image]="helper.getImageOfCard(this.effectOnMe.title)" title="{{this.effectOnMe.title}}" >
     </mat-card>
     <button style="margin-top: 15px" mat-raised-button color="primary" (click)="applyEffect()">Применить эффект</button>
   </div>

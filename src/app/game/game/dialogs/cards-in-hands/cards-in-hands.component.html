@@ -15,7 +15,7 @@
 
   </mat-form-field>
   <mat-form-field *ngIf="chooseCard" >
-    <mat-label>Выбор игрока</mat-label>
+    <mat-label>Выбор карты</mat-label>
     <mat-select [(ngModel)]="selectedCard">
       <mat-option [value]="card.cardNumber" *ngFor="let card of cardsInHands">{{card.cardTitle}}</mat-option>
     </mat-select>
@@ -27,6 +27,10 @@
 <div>
   <div *ngIf="suspendCard">
     <mat-card class="suspend-card" [style.background-image]="helper.getImageOfCard(this.suspendCard?.title)">
+    </mat-card>
+  </div>
+  <div *ngIf="persistenceCards.length" class="flex">
+    <mat-card class="persist-card" (click)="selectPersistCard(card)" [style.background-image]="helper.getImageOfCard(this.card?.title)" *ngFor="let card of persistenceCards">
     </mat-card>
   </div>
 </div>

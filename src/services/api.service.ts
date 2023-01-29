@@ -163,7 +163,7 @@ export class ApiService {
     fd.append('format','columns_compact');
     fd.append('p1',token);
     fd.append('p2',roomNumber);
-    fd.append('p3',idCard); //Null в большинстве случаев кроме одной специальной карты (Соблазн)
+    fd.append('p3',idCard);
 
 
     return  this.http.post(this.URL,fd);

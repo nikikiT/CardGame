@@ -217,7 +217,12 @@ export class RoomsInfoComponent implements OnInit{
 
   goBackToLogin(){
     this.router.navigate(['login']).then(
-           ()=>document.body.style.backgroundImage = this.helper.getImagePathByURL());
+           ()=> {
+             document.body.style.backgroundImage = this.helper.getImagePathByURL()
+             this.subscription?.unsubscribe()
+           })
+
+
   }
 
   isGameStarted(room:any){

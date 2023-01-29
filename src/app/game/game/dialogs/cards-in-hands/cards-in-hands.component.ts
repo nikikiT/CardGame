@@ -26,6 +26,7 @@ export class CardsInHandsComponent implements OnInit{
   card: any = {};
   error_msg: any;
   suspendCard: any = null
+  persistenceCards: any[] = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private api: ApiService,
@@ -94,6 +95,7 @@ export class CardsInHandsComponent implements OnInit{
 
   //TODO Упорство возвращает 3 карты на выбор и из них нужно выбрать одну одну
   //TODO Подозрение возвращает 1 карту (подсмотреть) и больше ничего с ней не делает
+
   toPlay() { //Выполнить розыгрыш карт в руке
     console.log("Токен: "+this.userToken,"№ комн: "+this.currentRoomNumber,"ид карты: "+this.card.cardNumber, "логин цели: "+this.selectedTarget,"доп. карта: "+this.selectedCard.toString())
     this.api.playCard(this.userToken,this.currentRoomNumber,this.card.cardNumber,this.selectedTarget,this.selectedCard.toString()).subscribe(v=>{
@@ -104,20 +106,22 @@ export class CardsInHandsComponent implements OnInit{
         return;
       }
 
-      if (v.RESULTS[0].Suspend){
-        console.log(v.RESULTS[1]['title'][0]);
-        console.log(v.RESULTS[1]['description'][0]);
-        alert(v.RESULTS[0].Suspend[0])
+      if (v.RESULTS[0].Suspend)
         this.suspendCard = {
           title:v.RESULTS[1].title[0],
           id: v.RESULTS[1].id[0],
         }
 
-      }
-
-      if(v.RESULTS[0].Persist){
-        alert(v.RESULTS[0].Persist[0])
-        this.dialogRef.close(v.RESULTS)
+      if(v.RESULTS[0].persist){
+        let persistCards = v.RESULTS[1]
+        persistCards['Название'].forEach((data:any, index:any)=>{
+          let cardInfo = {
+            title: data,
+            id: persistCards['Номер карты'][index],
+            description: persistCards['Описание'][index]
+          }
+          this.persistenceCards.push(cardInfo)
+        })
       }
 
 
@@ -126,5 +130,9 @@ export class CardsInHandsComponent implements OnInit{
     })
 
     this.openAdditionalMenu=false
+  }
+
+  selectPersistCard(card: any) {
+    this.api.getCard(this.userToken, this.currentRoomNumber,card.id).subscribe(() => this.dialogRef.close())
   }
 }
