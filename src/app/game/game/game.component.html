@@ -1,7 +1,6 @@
-<div class="buttons-container flex right-panel"><button id="create-room-button" mat-raised-button color="primary" (click)="backToInfo()">Выйти к комнатам</button>
-
-  <button class="apply-effect" mat-raised-button color="primary" (click)="applyEffect()">Применить эффект</button></div>
-
+<div class="buttons-container flex right-panel">
+  <button id="create-room-button" mat-raised-button color="primary" (click)="backToInfo()">Выйти к комнатам</button>
+</div>
 
 <mat-card class=" main-game-card" >
 <div class="flex">
@@ -28,13 +27,19 @@
     <h3 style="color:white;" >Сыгранная на вас карта</h3>
     <mat-card class="effect-card" [style.background-image]="getImageOfCard(this.effectOnMe)" title="{{this.effectOnMe}}" >
     </mat-card>
+    <button style="margin-top: 15px" mat-raised-button color="primary" (click)="applyEffect()">Применить эффект</button>
   </div>
 
-  <mat-card class="closed-doors-info" [hidden]="lockedDoor==''">
-    <h3 style="color:white;">Заколоченные двери</h3>
-    справа от {{this.lockedDoorLogin}}
-  </mat-card>
+  <div [hidden]="lockedDoor==''">
+    <mat-card class="closed-doors-info" >
+      <h3 style="color:white;">Заколоченные двери</h3>
+      справа от {{this.lockedDoorLogin}}
+    </mat-card>
+  </div>
+
 </div>
+
+
 <div *ngIf="cardsPersist.length">
     <mat-form-field>
       <mat-select [(ngModel)]="selectedCard">
@@ -43,6 +48,7 @@
     </mat-form-field>
   <button mat-raised-button color="primary" (click)="getCard()">Выбрать карту</button>
   </div>
+
 <!--  <div class="card-container">-->
 <!--    <mat-card class="card" [style.background-image]="whiskeyCard.cardImg" title="{{whiskeyCard.cardTitle}}" *ngFor="let whiskeyCard of whiskeyCards">-->
 <!--    </mat-card>-->

@@ -194,6 +194,7 @@ export class GameComponent implements OnInit, OnDestroy {
       case 'Соблазн' : return "url('assets/Cards/61_seduce.png')"
       case 'Никакого шашлыка!' : return "url('assets/Cards/81_not_burning.png')"
       case 'Сматывай удочки!' : return "url('assets/Cards/55_reel_fishing_rods.png')"
+      case 'Свидание вслепую!' : return "url('assets/Cards/98_forget.png')"
     }
     return '';
   }

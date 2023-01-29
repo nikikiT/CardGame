@@ -18,10 +18,9 @@
   text-align: center;
 }
 
-
-
 .player-container{
   display: flex;
+  width: 94%;
 }
 
 
@@ -45,16 +44,6 @@
 .player-card-current{
   background-color: darkseagreen;
 }
-
-.player-role-wrapper{
-
-}
-
-
-.apply-effect{
-
-}
-
 
 .closed-doors-info{
   color: white;

@@ -51,7 +51,7 @@ body{
 }
 
 .right-panel{
-  justify-content: right;
+  justify-content: left;
 }
 
 /*app-rooms-info{*/
