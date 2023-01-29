@@ -35,7 +35,6 @@ export class JoinGameComponent {
         roomNumber: this.roomNumberFC.value || '',
       }
       localStorage.setItem('gameRoomChosen',this.roomNumberFC.value || '' );
-      this.router.navigate(['game-table']);
       this.dialogRef.close();//Могу подать параметры которые получу в сабскрайб если вызвать афтер клоузд у диалог рефа в основ. комп.
       // this.api.updateGame(invokerData.userToken,invokerData.roomNumber)
       //   .subscribe(v=> {

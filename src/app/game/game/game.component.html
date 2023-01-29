@@ -23,12 +23,13 @@
 </mat-card>
 
 <div class="flex for-effect-card">
-  <div [hidden]="getImageOfCard(this.effectOnMe)==''">
+  <div [hidden]="helper.getImageOfCard(this.effectOnMe)==''">
     <h3 style="color:white;" >Сыгранная на вас карта</h3>
-    <mat-card class="effect-card" [style.background-image]="getImageOfCard(this.effectOnMe)" title="{{this.effectOnMe}}" >
+    <mat-card class="effect-card" [style.background-image]="helper.getImageOfCard(this.effectOnMe)" title="{{this.effectOnMe}}" >
     </mat-card>
     <button style="margin-top: 15px" mat-raised-button color="primary" (click)="applyEffect()">Применить эффект</button>
   </div>
+
 
   <div [hidden]="lockedDoor==''">
     <mat-card class="closed-doors-info" >

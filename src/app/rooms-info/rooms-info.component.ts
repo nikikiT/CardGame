@@ -152,7 +152,8 @@ export class RoomsInfoComponent implements OnInit{
     }
     const dialogRef = this.dialog.open(JoinGameComponent, {data: data});
     dialogRef.afterClosed().subscribe(data => {
-
+      this.subscription?.unsubscribe()
+      this.router.navigate(['game-table']);
     })
     this.userToken = JSON.parse(localStorage.getItem('userToken') || '');
     localStorage.setItem('roomNumberChosen', roomNumber);

@@ -1,39 +1,32 @@
 <h1 mat-dialog-title>Выбор действия для карты {{this.cardTitle}}</h1>
 <div mat-dialog-content class="buttons-container">
-
-
-    <button (click)="(chooseCard || chooseTarget) && (openAdditionalMenu=!openAdditionalMenu) || toPlay()" mat-raised-button *ngIf="card.cardType!='Защита' && card.cardType!='Инфекция'" color="primary">Сыграть</button>
-
-  <p *ngIf="openAdditionalMenu" class="buttons-container">
-
-    <mat-form-field *ngIf="chooseTarget">
-      <mat-label>Выбор игрока</mat-label>
-      <mat-select [(ngModel)]="selectedTarget">
-        <mat-option [value]="player.login" *ngFor="let player of players">{{player.login}}</mat-option>
-      </mat-select>
-
-    </mat-form-field>
-    <mat-form-field *ngIf="chooseCard" >
-      <mat-label>Выбор игрока</mat-label>
-      <mat-select [(ngModel)]="selectedCard">
-        <mat-option [value]="card.cardNumber" *ngFor="let card of cardsInHands">{{card.cardTitle}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <button (click)="toPlay()" *ngIf="chooseTarget || chooseCard" mat-raised-button color="primary">Подтвердить выбор</button>
-
-  </p>
-
-
+    <button (click)="(chooseCard || chooseTarget) && (openAdditionalMenu=true) || toPlay()" mat-raised-button *ngIf="card.cardType!='Защита' && card.cardType!='Инфекция'" color="primary">Сыграть</button>
     <button mat-raised-button (click)="toDrop()" *ngIf="card.cardTitle!='Нечто'" color="primary">Сброс</button>
-
-
-
     <button mat-raised-button (click)="toChange()" *ngIf="card.cardTitle!='Нечто'" color="primary">Обмен</button>
-
-
-
     <button *ngIf="card.cardType=='Защита' && card.cardTitle!='Нечто'" mat-raised-button (click)="toDefend()"  color="primary">Защита</button>
+</div>
+<p *ngIf="openAdditionalMenu" class="buttons-container">
 
+  <mat-form-field *ngIf="chooseTarget">
+    <mat-label>Выбор игрока</mat-label>
+    <mat-select [(ngModel)]="selectedTarget">
+      <mat-option [value]="player.login" *ngFor="let player of players">{{player.login}}</mat-option>
+    </mat-select>
 
+  </mat-form-field>
+  <mat-form-field *ngIf="chooseCard" >
+    <mat-label>Выбор игрока</mat-label>
+    <mat-select [(ngModel)]="selectedCard">
+      <mat-option [value]="card.cardNumber" *ngFor="let card of cardsInHands">{{card.cardTitle}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button (click)="toPlay()" *ngIf="chooseTarget || chooseCard" mat-raised-button color="primary">Подтвердить выбор</button>
+
+</p>
+<div>
+  <div *ngIf="suspendCard">
+    <mat-card class="suspend-card" [style.background-image]="helper.getImageOfCard(this.suspendCard?.title)">
+    </mat-card>
+  </div>
 </div>
