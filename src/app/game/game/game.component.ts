@@ -17,8 +17,6 @@ export class GameComponent implements OnInit, OnDestroy {
   userLogin: any;
   currentRoomCode: any;
   temporaryMessInfo: any;
-  dataSource: any[] = [];
-  cardsPersist: any[] = []
   whiskeyCards: any[] = [];
   rout: any;
   cardsInHands: any[] = [];
@@ -27,11 +25,10 @@ export class GameComponent implements OnInit, OnDestroy {
   role:any;
   currentMover:any;
   message: any;
-
   effectOnMe: any;
-
   lockedDoor: any;
   lockedDoorLogin: any;
+  whiskeyCardLogin: any;
 
   subscription: Subscription | null = null;
 
@@ -42,9 +39,11 @@ export class GameComponent implements OnInit, OnDestroy {
     let source = interval(3000)
     this.subscription = source.subscribe(()=>this.getGameInfo())
   }
+
   ngOnDestroy(){
     this.subscription?.unsubscribe();
   }
+
   backToInfo() {
     this.router.navigate(['games-hub']).then(
       () => {
@@ -104,7 +103,6 @@ export class GameComponent implements OnInit, OnDestroy {
       cards['Номер_ваших_карт'].forEach((data: any, index: any) => {
         let cardInf: any = {};
         cardInf.cardImg=this.helper.getImageOfCard(cards['Названия_ваших_карт'][index]);
-
         cardInf.cardNumber = data;
         cardInf.cardDescription = cards['Описание_ваших_карт'][index];
         cardInf.cardTitle = cards['Названия_ваших_карт'][index];
@@ -114,23 +112,35 @@ export class GameComponent implements OnInit, OnDestroy {
           this.cardsInHands.push(cardInf);
       });
       let cardsInHandsCopy: any[] = this.cardsInHands.slice();
-
       cardsInHandsCopy.forEach((card:any, index:number) =>{
         if (!newCards.some(c => c.cardNumber==card.cardNumber))
             this.cardsInHands.splice(index,1);
-      })
+      });
 
+      let newWhiskey: any[] = [];
+      let whiskeyCards= this.temporaryMessInfo[8];
+      if (whiskeyCards['login'][0]==undefined)
+        this.whiskeyCardLogin = '';
 
-      let whiskeyCards= this.temporaryMessInfo[8]['Названия_карт_сыгравшего_виски'];
       if(whiskeyCards!=undefined){
-        whiskeyCards.forEach((data: any, index: any) => {
-          let whisCardInf: any = {};
-          whisCardInf.cardName = data
-          whisCardInf.cardImg = this.helper.getImageOfCard(whiskeyCards['Названия_карт_сыгравшего_виски'][index])
-          this.whiskeyCards.push(whisCardInf);
-          console.log(this.whiskeyCards)
-        })
+        whiskeyCards['Названия_карт_сыгравшего_виски'].forEach((data: any, index: any) => {
+          let whiskeyCardInf: any = {};
+          whiskeyCardInf.cardName = data
+          whiskeyCardInf.cardNumber = whiskeyCards['Номер_карт_сыгравшего_виски'][index];
+          whiskeyCardInf.cardImg = this.helper.getImageOfCard(whiskeyCards['Названия_карт_сыгравшего_виски'][index])
+          newWhiskey.push(whiskeyCardInf);
+          if (!this.whiskeyCards.some(orc => orc.cardNumber==whiskeyCardInf.cardNumber))
+            this.whiskeyCards.push(whiskeyCardInf);
+        });
       }
+      let whiskeyCopy: any[] = this.whiskeyCards.slice();
+      whiskeyCopy.forEach((card:any, indexL:any) =>{
+        if (!newWhiskey.some(w => w.cardNumber==card.cardNumber))
+          this.whiskeyCards.splice(indexL,1);
+      });
+
+
+
       let players = this.temporaryMessInfo[2];
     if (!this.players.length) {
       players['Номер_в_порядке_хода'].forEach((data: any, index: any) => {
@@ -162,15 +172,15 @@ export class GameComponent implements OnInit, OnDestroy {
       });
     }
       this.players.sort((a:any,b:any)=>a .orderNumber-b.orderNumber);
-      this.effectOnMe= {
-        title: this.temporaryMessInfo[5]['Название_сыгранной_на_вас_карты'][0],
-        id: this.temporaryMessInfo[5]['Номер_сыгранной_на_вас_карты'][0]
-      };
+
+        this.effectOnMe= {
+          title: this.temporaryMessInfo[5]['Название_сыгранной_на_вас_карты'][0],
+          id: this.temporaryMessInfo[5]['Номер_сыгранной_на_вас_карты'][0]
+        };
 
       this.timer=this.temporaryMessInfo[0]['Осталось_до_конца_хода_в_сек'][0];
       this.role=this.temporaryMessInfo[3]['Ваша_Роль'][0];
     });
-
   }
 
 

@@ -6,9 +6,6 @@
   background-size: 300px;
 }
 
-.card-container{
-  display: flex;
-}
 
 .player-card{
   height: 210px;
@@ -22,9 +19,6 @@
   display: flex;
   width: 94%;
 }
-
-
-
 
 .main-game-card{
   text-align: center;
@@ -48,4 +42,21 @@
 
 .for-effect-card>*{
   margin: 15px;
+}
+
+.whiskey-wrapper{
+  display: flex;
+  width: 100%;
+  margin: 3%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.whiskey-card{
+  flex-direction: row !important;
+  background-size: 215px;
+  height: 300px;
+  width: 215px;
+  cursor: not-allowed;
 }

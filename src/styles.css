@@ -55,6 +55,7 @@ body{
 }
 
 .effect-card, .suspend-card, .persist-card{
+  flex-direction: row;
   background-size: 215px;
   height: 300px;
   width: 215px;

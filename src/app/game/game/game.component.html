@@ -23,37 +23,34 @@
 </mat-card>
 
 <div class="flex for-effect-card">
+  <ng-container *ngIf="effectOnMe">
   <div [hidden]="helper.getImageOfCard(this.effectOnMe.title)==''">
     <h3 style="color:white;" >Сыгранная на вас карта</h3>
     <mat-card class="effect-card" [style.background-image]="helper.getImageOfCard(this.effectOnMe.title)" title="{{this.effectOnMe.title}}" >
     </mat-card>
     <button style="margin-top: 15px" mat-raised-button color="primary" (click)="applyEffect()">Применить эффект</button>
   </div>
-
+  </ng-container>
 
   <div [hidden]="lockedDoor==''">
-    <mat-card class="closed-doors-info" >
+    <mat-card class="closed-doors-info">
       <h3 style="color:white;">Заколоченные двери</h3>
       справа от {{this.lockedDoorLogin}}
     </mat-card>
   </div>
+</div>
+
+<div [hidden]="this.whiskeyCardLogin==''" class="whiskey-wrapper">
+  <h3 [hidden]="this.whiskeyCardLogin==''" style="color:white;" >Карты сыгравшего виски {{this.whiskeyCardLogin}}</h3>
+  <div class="flex">
+    <ng-container *ngIf="whiskeyCards">
+      <mat-card class="whiskey-card" [style.background-image]="whiskeyCard.cardImg" title="{{whiskeyCard.cardTitle}}" *ngFor="let whiskeyCard of whiskeyCards">
+      </mat-card>
+    </ng-container>
+  </div>
 
 </div>
 
-
-<div *ngIf="cardsPersist.length">
-    <mat-form-field>
-      <mat-select [(ngModel)]="selectedCard">
-        <mat-option [value]="card['Номер карты']" *ngFor="let card of cardsPersist"> {{card['Название']}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  <button mat-raised-button color="primary" (click)="getCard()">Выбрать карту</button>
-  </div>
-
-<!--  <div class="card-container">-->
-<!--    <mat-card class="card" [style.background-image]="whiskeyCard.cardImg" title="{{whiskeyCard.cardTitle}}" *ngFor="let whiskeyCard of whiskeyCards">-->
-<!--    </mat-card>-->
-<!--  </div>-->
 
 <div class="player-container">
   <mat-card [class.player-card-current]="player.login==currentMover" title="{{player.id}}" class="player-card" *ngFor="let player of players">
@@ -61,10 +58,9 @@
     <mat-label >{{player.login}}</mat-label>
   </mat-card>
 </div>
-<br>
 
 <div class="card-container">
-  <mat-card class="card"  (click)="pickCard(cardInHand)" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}}" *ngFor="let cardInHand of cardsInHands">
+  <mat-card style="cursor: grab" class="card"  (click)="pickCard(cardInHand)" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}}" *ngFor="let cardInHand of cardsInHands">
   </mat-card>
 </div>
 
