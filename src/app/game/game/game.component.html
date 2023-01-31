@@ -44,7 +44,7 @@
   <h3 [hidden]="this.whiskeyCardLogin==''" style="color:white;" >Карты сыгравшего виски {{this.whiskeyCardLogin}}</h3>
   <div class="flex">
     <ng-container *ngIf="whiskeyCards">
-      <mat-card class="whiskey-card" [style.background-image]="whiskeyCard.cardImg" title="{{whiskeyCard.cardTitle}}" *ngFor="let whiskeyCard of whiskeyCards">
+      <mat-card class="whiskey-card" [style.background-image]="whiskeyCard.cardImg" title="{{whiskeyCard.cardTitle}}}" *ngFor="let whiskeyCard of whiskeyCards">
       </mat-card>
     </ng-container>
   </div>
@@ -60,7 +60,7 @@
 </div>
 
 <div class="card-container">
-  <mat-card style="cursor: grab" class="card"  (click)="pickCard(cardInHand)" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}}" *ngFor="let cardInHand of cardsInHands">
+  <mat-card style="cursor: grab" class="card"  (click)="pickCard(cardInHand)" [style.background-image]="cardInHand.cardImg" title="{{cardInHand.cardTitle}} {{cardInHand.cardNumber}}" *ngFor="let cardInHand of cardsInHands">
   </mat-card>
 </div>
 

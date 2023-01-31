@@ -85,6 +85,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
     this.api.updateGame(this.userToken, this.currentRoomCode).subscribe(v => {
       this.temporaryMessInfo = v.RESULTS;
+
+      if (v.ERROR != undefined)
+        console.log(v.ERROR);
+
       localStorage.setItem('temporaryMessInfo', JSON.stringify(v.RESULTS));
       if(!v.RESULTS[1]?.update_message){
         this.message=v.RESULTS[0]['update_message'][0]
